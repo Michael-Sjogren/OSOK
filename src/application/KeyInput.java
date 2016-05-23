@@ -34,6 +34,12 @@ public class KeyInput{
 				}
 		});
 		
+		stage.addEventHandler(KeyEvent.KEY_PRESSED, ej->{
+			if(ej.getCode()==KeyCode.SPACE){
+				move.jump();
+			}
+		});
+		
 		
 		
 		

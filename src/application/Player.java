@@ -4,10 +4,13 @@ import javafx.scene.shape.Circle;
 
 public class Player {
 	private String username;
-	private final double size = 10.0;
-	private double yPos = 10.0, xPos = 512.0, velY = 0;
+	private final double size = 20.0;
+	private double yPos = 10.0, xPos = 512.0, velY = 0.1;
 	private double velLeft = 0, velRight = 0;
 	private Circle ball = new Circle();
+	private volatile boolean colUp= false, colDown= false, colLeft= false, colRight = false;
+
+	
 
 	public Player() {
 		ball.setRadius(size);
@@ -67,6 +70,37 @@ public class Player {
 
 	public void setVelLeft(double velLeft) {
 		this.velLeft = velLeft;
+	}
+	public boolean isColUp() {
+		return colUp;
+	}
+
+	public void setColUp(boolean colUp) {
+		this.colUp = colUp;
+	}
+
+	public boolean isColDown() {
+		return colDown;
+	}
+
+	public void setColDown(boolean colDown) {
+		this.colDown = colDown;
+	}
+
+	public boolean isColLeft() {
+		return colLeft;
+	}
+
+	public void setColLeft(boolean colLeft) {
+		this.colLeft = colLeft;
+	}
+
+	public boolean isColRight() {
+		return colRight;
+	}
+
+	public void setColRight(boolean colRight) {
+		this.colRight = colRight;
 	}
 
 }

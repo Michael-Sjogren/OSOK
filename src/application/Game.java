@@ -3,6 +3,7 @@ package application;
 public class Game implements Runnable {
 	
 	Move move;
+	Gravity gravity;
 	long lastTime = System.nanoTime();
 	double amountOfTicks = 60.0;
 	double ns = 1000000000 / amountOfTicks;
@@ -12,8 +13,9 @@ public class Game implements Runnable {
 	int frames = 0;
 	boolean running = true;
 
-	public Game(Move move) {
+	public Game(Move move,Gravity gravity) {
 		this.move=move;
+		this.gravity=gravity;
 	}
 
 	public void run() {
@@ -28,7 +30,7 @@ public class Game implements Runnable {
 			}
 			render();
 			frames++;
-
+			
 			if (System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
 				System.out.println("FPS: " + frames + " TICKS: " + updates);
@@ -46,6 +48,7 @@ public class Game implements Runnable {
 
 	private void tick() {
 		move.movePlayer();
+		gravity.fall();
 	}
 	public boolean isRunning() {
 		return running;

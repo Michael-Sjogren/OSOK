@@ -13,18 +13,21 @@ public class CleintGui extends Application {
 	KeyInput keyInput;
 	Player player;
 	Scene scene;
+	Gravity gravity;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		scene = new Scene(createContent(player), 1024, 720);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		System.out.println("Starting");
 		player = new Player();
 		move = new Move(player);
 		keyInput = new KeyInput(primaryStage, move);
-		game = new Game(move);
+		gravity = new Gravity(player);
+		game = new Game(move,gravity);
 		thread = new Thread(game);
 		thread.start();
+		scene = new Scene(createContent(player), 1024, 720);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 
 	}
 
