@@ -23,7 +23,7 @@ public class testMain extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        System.out.println("Hello World leo suger KNOT");
+
         Group root = new Group();
         Label lbl = new Label("hello world");
 
@@ -55,6 +55,7 @@ public class testMain extends Application{
 
 
     public void stop(){
+        System.out.println("stage close");
         client.shutdown();
     }
 
@@ -63,7 +64,7 @@ public class testMain extends Application{
         client = new Client(ip , port );
         Thread clientThread = new Thread(client);
         clientThread.start();
-        System.out.println("thread started");
+        System.out.println("client started");
         launch(args);
     }
 
