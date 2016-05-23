@@ -7,8 +7,8 @@ import java.util.List;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Shape;
 
-public class Platform {
-	private List<Shape> rectangle = new ArrayList<Shape>();
+public class Platform2D{
+	private List<Shape> lines = new ArrayList<Shape>();
 	private double width = 300;
 	private double height = 20;
 	private double startX;
@@ -19,7 +19,7 @@ public class Platform {
 	private Line west;
 
 	/** Enter the startX and startY of the platform **/
-	public Platform(double startX, double startY) {
+	public Platform2D(double startX, double startY) {
 		this.startX = startX;
 		this.startY = startY;
 
@@ -31,12 +31,12 @@ public class Platform {
 
 		west = new Line(startX, startY, startX, startY + height);
 
-		rectangle.addAll(Arrays.asList(north, west, south, east));
+		lines.addAll(Arrays.asList(north, west, south, east));
 
 	}
 
 	public List<Shape> getPlatform() {
-		return rectangle;
+		return lines;
 	}
 
 }

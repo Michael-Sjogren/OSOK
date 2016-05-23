@@ -7,3 +7,5 @@
 .idea/copyright/profiles_settings.xml
 *.idea/
 bin/*
+
+*.class
