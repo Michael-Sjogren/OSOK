@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 
 public class KeyInput{
 	
-	Stage stage;
+	private Stage stage;
 	
 	public KeyInput(Stage stage,Move move){
 		
