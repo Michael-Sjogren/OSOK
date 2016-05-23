@@ -38,6 +38,7 @@ public class Game implements Runnable {
 		}
 
 	}
+	
 
 	private void render() {
 
@@ -46,4 +47,12 @@ public class Game implements Runnable {
 	private void tick() {
 		move.movePlayer();
 	}
+	public boolean isRunning() {
+		return running;
+	}
+
+	public void setRunning(boolean running) {
+		this.running = running;
+	}
+	
 }

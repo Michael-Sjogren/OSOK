@@ -7,17 +7,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class CleintGui extends Application {
+	Thread thread;
+	Game game;
+	Move move;
+	KeyInput keyInput;
+	Player player;
+	Scene scene;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Player player = new Player();
-		Scene scene = new Scene(createContent(player), 1024, 720);
+		scene = new Scene(createContent(player), 1024, 720);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		Move move = new Move(player);
-		KeyInput keyInput = new KeyInput(primaryStage, move);
-		Game game = new Game(move);
-		Thread thread = new Thread(game);
+		player = new Player();
+		move = new Move(player);
+		keyInput = new KeyInput(primaryStage, move);
+		game = new Game(move);
+		thread = new Thread(game);
 		thread.start();
 
 	}
@@ -32,5 +38,16 @@ public class CleintGui extends Application {
 		root.getChildren().add(player.getBall());
 		return root;
 	}
+	
+	public void stop(){
+		game.setRunning(false);
+		try {
+			thread.join();
+			System.out.println("Game Thread Terminated");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 }
