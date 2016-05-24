@@ -25,6 +25,9 @@ public class Collision {
     public void checkNorth() {
         for(int i = 0; i < platforms.size(); i++){
             if(player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(0).getBoundsInParent())){
+                player.setColDown(true);
+            }else{
+                player.setColDown(false);
             }
         }
     }
@@ -32,7 +35,9 @@ public class Collision {
     public void checkEast() {
         for(int i = 0; i < platforms.size(); i++){
             if(player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(1).getBoundsInParent())){
-
+                player.setColLeft(true);
+            }else{
+                player.setColLeft(false);
             }
         }
     }
@@ -40,7 +45,9 @@ public class Collision {
     public void checkSouth() {
         for(int i = 0; i < platforms.size(); i++){
             if(player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(2).getBoundsInParent())){
-
+                player.setColUp(true);
+            }else{
+                player.setColUp(false);
             }
         }
     }
@@ -48,7 +55,9 @@ public class Collision {
     public void checkWest() {
         for(int i = 0; i < platforms.size(); i++){
             if(player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(3).getBoundsInParent())){
-
+                player.setColRight(true);
+            } else {
+                player.setColRight(false);
             }
         }
 
