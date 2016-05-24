@@ -5,12 +5,10 @@ import javafx.scene.shape.Circle;
 public class Player {
 	private String username;
 	private final double size = 20.0;
-	private double yPos = 10.0, xPos = 512.0, velY = 0.1;
+	private double yPos = 10.0, xPos = 512.0, velY = 0;
 	private double velLeft = 0, velRight = 0;
 	private Circle ball = new Circle();
-	private volatile boolean colUp= false, colDown= false, colLeft= false, colRight = false;
-
-	
+	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
 
 	public Player() {
 		ball.setRadius(size);
@@ -71,6 +69,7 @@ public class Player {
 	public void setVelLeft(double velLeft) {
 		this.velLeft = velLeft;
 	}
+
 	public boolean isColUp() {
 		return colUp;
 	}
@@ -101,6 +100,14 @@ public class Player {
 
 	public void setColRight(boolean colRight) {
 		this.colRight = colRight;
+	}
+
+	public boolean isFirstTouch() {
+		return firstTouch;
+	}
+
+	public void setFirstTouch(boolean firstTouch) {
+		this.firstTouch = firstTouch;
 	}
 
 }

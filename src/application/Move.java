@@ -9,14 +9,7 @@ public class Move {
 
 	public void movePlayer() {
 		player.setxPos(player.getxPos() + player.getVelRight() + player.getVelLeft());
-
-		if (player.getyPos() > 701) {
-			player.setVelY(0);
-			player.setyPos(700.99);
-			player.setColDown(true);
-		} else {
 			player.setyPos(player.getyPos() + player.getVelY());
-		}
 	}
 
 	public void changeVelY(double velY) {

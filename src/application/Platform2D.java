@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.scene.shape.*;
-import javafx.scene.shape.Shape;
 
 public class Platform2D{
 	private List<Shape> lines = new ArrayList<Shape>();
@@ -24,14 +23,16 @@ public class Platform2D{
 		this.startY = startY;
 
 		north = new Line(startX, startY, startX + width, startY);
-
+		
 		east = new Line(north.getEndX(), north.getEndY(), north.getEndX(), north.getEndY() + height);
 
 		south = new Line(east.getEndX(), east.getEndY(), east.getEndX() - width, east.getEndY());
 
 		west = new Line(startX, startY, startX, startY + height);
+		
+		Line floor = new Line(0,680,1024,680);
 
-		lines.addAll(Arrays.asList(north, west, south, east));
+		lines.addAll(Arrays.asList(north, west, south, east, floor));
 
 	}
 

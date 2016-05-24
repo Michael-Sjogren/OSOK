@@ -50,8 +50,8 @@ public class Game implements Runnable {
 
 	private void tick() {
 		collision.checkCollision();
-		move.movePlayer();
 		gravity.fall();
+		move.movePlayer();
 	}
 	public boolean isRunning() {
 		return running;
