@@ -38,15 +38,17 @@ public class Client {
 
         System.out.println(" -- Client connected -- ");
 
+                    /* start write thread for client */
+        write = new ClientWrite(socket );
+        writingThread = new Thread(write , "-- client-write-thread -- ");
+        writingThread.start();
+
             /* start read thread for client */
         read = new ClientRead(socket);
         readingThread = new Thread(read , " -- client-read-thread --");
         readingThread.start();
 
-             /* start write thread for client */
-        write = new ClientWrite(socket );
-        writingThread = new Thread(write , "-- client-write-thread -- ");
-        writingThread.start();
+
     }
 
 
@@ -57,7 +59,6 @@ public class Client {
         read.isRunning(false);
         write.isRunning(false);
         try {
-
             readingThread.join();
             writingThread.join();
             System.out.println("-- client all threads terminated --");
@@ -84,7 +85,6 @@ class ClientRead implements Runnable{
             try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
 
             while(running){
-            Thread.sleep(200);
                 String s = ois.readUTF();
                 System.out.println(s);
             }
@@ -109,12 +109,12 @@ class ClientWrite implements Runnable{
 
     @Override
     public void run(){
-        System.out.println(socket.isConnected());
-        try {
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())){
+            System.out.println("CLIENT WRITE START");
             while(running){
                 Thread.sleep(1000);
-                String s = "Client writing to server";
+                String s = "CLIENT :: Client writing to server";
                 oos.writeUTF(s);
 
             }

@@ -9,31 +9,38 @@ import java.net.Socket;
 public class Server {
 
     private static Socket csocket;
+    private static ServerRead read;
+    private static ServerWrite write;
+    private static Thread threadRead;
+    private static Thread threadWrite;
 
-    Server(Socket csocket) {
-        this.csocket = csocket;
-    }
 
     public static void main(String args[]) {
 
         try {
+
             ServerSocket ssock = new ServerSocket(55556);
             System.out.println("isServerSocket closed : " + ssock.isClosed());
-            while(true){
+            while (true) {
+
                 csocket = ssock.accept();
+                new Thread(new ServerRead(csocket)).start();
+                new Thread(new ServerWrite(csocket)).start();
                 System.out.println("client connected" + "");
-                new Thread(new ServerWrite(csocket) , "Server-write-thread").start();
-                new Thread(new ServerRead(csocket) , "Server-read-thread").start();
+
             }
+
 
         } catch (IOException e) {
             e.printStackTrace();
+            }
         }
     }
 
+
     /** Reads Client **/
-    private static class ServerRead implements Runnable {
-       private Socket csocket;
+     class ServerRead implements Runnable {
+        private Socket csocket;
         public ServerRead(Socket csocket) {
             this.csocket = csocket;
         }
@@ -43,18 +50,16 @@ public class Server {
             try(ObjectInputStream ois = new ObjectInputStream(csocket.getInputStream())) {
 
                 while(true){
-                    Thread.sleep(2000);
-                    System.out.println("Reads from Client : --v");
-                    System.out.println(ois.readUTF());
-                    }
-                }
-                 catch (IOException e) {
-                System.out.println(e);
-                } catch (InterruptedException e) {
-                e.printStackTrace();
+                    String s = ois.readUTF();
+                    System.out.println(s);
                 }
             }
-         }
+            catch (IOException e) {
+                System.out.println(e);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /** Writes to Clients **/
@@ -68,13 +73,10 @@ public class Server {
 
         public void run() {
             try(ObjectOutputStream oos = new ObjectOutputStream(csocket.getOutputStream())) {
-                System.out.println("Writing to Client");
-                for (int i = 100; i >= 0; i--) {
-                    oos.writeUTF(i +
-                            " bottles of beer on the wall");
-                }
+
+
                 while(true){
-                    Thread.sleep(17);
+                   oos.writeUTF("SERVER :: Writing to Client");
                 }
             }
             catch (IOException e) {
