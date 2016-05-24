@@ -85,6 +85,7 @@ class ClientRead implements Runnable{
             try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
 
             while(running){
+                Thread.sleep(1000);
                 String s = ois.readUTF();
                 System.out.println(s);
             }

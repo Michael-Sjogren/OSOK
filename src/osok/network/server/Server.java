@@ -50,8 +50,10 @@ public class Server {
             try(ObjectInputStream ois = new ObjectInputStream(csocket.getInputStream())) {
 
                 while(true){
+                    Thread.sleep(1000);
                     String s = ois.readUTF();
                     System.out.println(s);
+
                 }
             }
             catch (IOException e) {
@@ -76,7 +78,9 @@ public class Server {
 
 
                 while(true){
+                   Thread.sleep(1000);
                    oos.writeUTF("SERVER :: Writing to Client");
+
                 }
             }
             catch (IOException e) {
