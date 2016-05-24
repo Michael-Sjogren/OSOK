@@ -18,6 +18,7 @@ public class CleintGui extends Application {
 	private Player player;
 	private Scene scene;
 	private Gravity gravity;
+	private Collision collision;
 	private List<Platform2D> platforms = new ArrayList<Platform2D>();
 
 	@Override
@@ -33,7 +34,8 @@ public class CleintGui extends Application {
 		move = new Move(player);
 		keyInput = new KeyInput(primaryStage, move);
 		gravity = new Gravity(player);
-		game = new Game(move,gravity);
+		collision = new Collision(platforms, player);
+		game = new Game(move, gravity, collision);
 		thread = new Thread(game);
 		thread.start();
 		scene = new Scene(createContent(player), 1024, 720);
@@ -42,6 +44,7 @@ public class CleintGui extends Application {
 		primaryStage.show();
 
 	}
+
 
 	public static void main(String[] args) {
 		launch(args);
