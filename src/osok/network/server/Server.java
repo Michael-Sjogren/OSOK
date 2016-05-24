@@ -51,7 +51,7 @@ public class Server {
 
                 while(true){
                     Thread.sleep(1000);
-                    String s = ois.readUTF();
+                    String s = (String) ois.readObject();
                     System.out.println(s);
 
                 }
@@ -59,6 +59,8 @@ public class Server {
             catch (IOException e) {
                 System.out.println(e);
             } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -79,7 +81,7 @@ public class Server {
 
                 while(true){
                    Thread.sleep(1000);
-                   oos.writeUTF("SERVER :: Writing to Client");
+                   oos.writeObject("SERVER :: Writing to Client");
 
                 }
             }

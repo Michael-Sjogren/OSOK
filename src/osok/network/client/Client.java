@@ -86,7 +86,7 @@ class ClientRead implements Runnable{
 
             while(running){
                 Thread.sleep(1000);
-                String s = ois.readUTF();
+                String s = (String) ois.readObject();
                 System.out.println(s);
             }
                 System.out.println(" -- client isRunning read : " + running + " --");
@@ -116,7 +116,7 @@ class ClientWrite implements Runnable{
             while(running){
                 Thread.sleep(1000);
                 String s = "CLIENT :: Client writing to server";
-                oos.writeUTF(s);
+                oos.writeObject(s);
 
             }
             System.out.println(" -- client isRunning write : " + running + " -- ");
