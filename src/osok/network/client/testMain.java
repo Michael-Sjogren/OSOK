@@ -17,7 +17,7 @@ public class testMain extends Application{
 
     private static Client client;
     private static String ip = "127.0.0.1";
-    private static int port = 55555;
+    private static int port = 55556;
 
 
     @Override
@@ -48,22 +48,19 @@ public class testMain extends Application{
                 case DOWN:  circle.setCenterY(circle.getCenterY() + 15); break;
                 case LEFT:  circle.setCenterX(circle.getCenterX() - 15); break;
             }
-            client.setCirclePos(circle.getCenterX() , circle.getCenterY());
         });
 
     }
 
-
+    @Override
     public void stop(){
-        System.out.println("stage close");
         client.shutdown();
+        System.out.println("stage close");
     }
 
     public static void main(String[] args )
     {
-        client = new Client(ip , port );
-        Thread clientThread = new Thread(client);
-        clientThread.start();
+        client = new Client(ip , port , "testClient");
         System.out.println("client started");
         launch(args);
     }

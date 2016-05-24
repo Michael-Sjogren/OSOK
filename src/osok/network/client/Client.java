@@ -11,56 +11,56 @@ import java.net.Socket;
 /**
  * Created by Michael Sjögren on 2016-05-20.
  */
-public class Client implements Runnable {
-    private  int port;
-    private  String ip;
+public class Client {
+    private int port;
+    private String ip;
     private ClientRead read;
     private ClientWrite write;
     private Thread writingThread;
     private Thread readingThread;
-
+    private Socket socket;
+    private String username;
 
 
 
     /* konstruktor */
-    public Client(String ip, int port){
+    public Client(String ip, int port , String username){
     this.ip = ip;
     this.port = port;
-    }
+    this.username = username;
 
-    @Override
-    public void run() {
-        System.out.println("client thread running");
-        try(Socket socket = new Socket("127.0.0.1", 55555)) {
-
-            System.out.println("Client connected");
-
-            /* start read thread for client */
-            read = new ClientRead(socket);
-            readingThread = new Thread(read);
-            readingThread.start();
-
-             /* start write thread for client */
-            write = new ClientWrite(socket);
-            writingThread = new Thread(write);
-            writingThread.start();
-
-        }catch (IOException e){
+       try {
+           Socket socket = new Socket("127.0.0.1", 55556);
+           this.socket = socket;
+        } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println(" -- Client connected -- ");
+
+            /* start read thread for client */
+        read = new ClientRead(socket);
+        readingThread = new Thread(read , " -- client-read-thread --");
+        readingThread.start();
+
+             /* start write thread for client */
+        write = new ClientWrite(socket );
+        writingThread = new Thread(write , "-- client-write-thread -- ");
+        writingThread.start();
     }
 
-    public void setCirclePos(double centerX, double centerY) {
-    }
 
+
+
+    /** terminates threads **/
     public void shutdown()  {
+        read.isRunning(false);
+        write.isRunning(false);
         try {
-            read.isRunning(false);
-            write.isRunning(false);
 
-            writingThread.join();
             readingThread.join();
-            System.out.println("threads terminated");
+            writingThread.join();
+            System.out.println("-- client all threads terminated --");
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -68,7 +68,7 @@ public class Client implements Runnable {
     }
 }
 
-/* reads from server */
+/** reads from server **/
 class ClientRead implements Runnable{
 
     private Socket socket;
@@ -81,12 +81,14 @@ class ClientRead implements Runnable{
     @Override
     public void run(){
             System.out.println(socket.isConnected());
-            try (ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+            try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
 
-            while(true){
-            Thread.sleep(2000);
-                System.out.println("reads server");
+            while(running){
+            Thread.sleep(200);
+                String s = ois.readUTF();
+                System.out.println(s);
             }
+                System.out.println(" -- client isRunning read : " + running + " --");
             }catch (Exception e){
             e.printStackTrace();
             }
@@ -96,7 +98,7 @@ class ClientRead implements Runnable{
             this.running = running;
             }
  }
-/* writes to server */
+    /** writes to server **/
 class ClientWrite implements Runnable{
     private Socket socket;
     private boolean running = true;
@@ -109,11 +111,14 @@ class ClientWrite implements Runnable{
     public void run(){
         System.out.println(socket.isConnected());
         try {
-            ObjectOutputStream in = new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
             while(running){
-                Thread.sleep(2000);
-                in.writeUTF("hello");
+                Thread.sleep(1000);
+                String s = "Client writing to server";
+                oos.writeUTF(s);
+
             }
+            System.out.println(" -- client isRunning write : " + running + " -- ");
         }catch (Exception e){
             e.printStackTrace();
         }
