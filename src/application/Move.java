@@ -42,7 +42,7 @@ public class Move {
 	public void jump() {
 		if (player.isColDown()) {
 			player.setColDown(false);
-			player.setVelY(-10);
+			player.setVelY(-12);
 		}
 	}
 

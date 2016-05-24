@@ -8,7 +8,7 @@ public class Gravity {
 	}
 	public void fall(){
 		if(!player.isColDown()){
-		player.setVelY(player.getVelY()+0.1/.50);
+		player.setVelY(player.getVelY()+0.1/.40);
 		}
 	}
 }
