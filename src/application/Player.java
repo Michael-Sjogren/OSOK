@@ -9,6 +9,7 @@ public class Player {
 	private double velLeft = 0, velRight = 0;
 	private Circle ball = new Circle();
 	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
+	private boolean isLeft = true;
 
 	public Player() {
 		ball.setRadius(size);
@@ -108,6 +109,14 @@ public class Player {
 
 	public void setFirstTouch(boolean firstTouch) {
 		this.firstTouch = firstTouch;
+	}
+
+	public boolean isLeft() {
+		return isLeft;
+	}
+
+	public void setLeft(boolean isLeft) {
+		this.isLeft = isLeft;
 	}
 
 }

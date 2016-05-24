@@ -18,18 +18,22 @@ public class Move {
 
 	public void moveLeft() {
 		player.setVelLeft(-3);
+		player.setLeft(true);
 	}
 
 	public void moveRight() {
 		player.setVelRight(+3);
+		player.setLeft(false);
 	}
 
 	public void resetVelLeft() {
 		player.setVelLeft(0);
+		player.setLeft(true);
 	}
 
 	public void resetVelRight() {
 		player.setVelRight(0);
+		player.setLeft(false);
 	}
 
 	public void jump() {

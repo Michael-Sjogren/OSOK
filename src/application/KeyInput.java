@@ -42,7 +42,6 @@ public class KeyInput{
 		
 		
 		
-		
 		this.stage = stage;	
 	}
 	

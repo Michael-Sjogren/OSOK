@@ -69,7 +69,7 @@ public class Collision {
 		boolean flag = false;
 		for (int i = 0; i < platforms.size(); i++) {
 			if (player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(2).getBoundsInParent())) {
-					player.setVelY(player.getVelY()*-1);
+					player.setVelY(player.getVelY()*-0.4);
 					player.setyPos(((Line) platforms.get(i).getPlatform().get(2)).getEndY() + player.getBall().getRadius());
 				}
 				flag = true;
