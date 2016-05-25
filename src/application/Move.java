@@ -1,45 +1,45 @@
 package application;
 
 public class Move {
-	Player player;
+	Bank bank;
 
-	public Move(Player player) {
-		this.player = player;
+	public Move(Bank bank) {
+		this.bank=bank;
 	}
 
 	public void movePlayer() {
-		player.setxPos(player.getxPos() + player.getVelRight() + player.getVelLeft());
-			player.setyPos(player.getyPos() + player.getVelY());
+		bank.getPlayer().setxPos(bank.getPlayer().getxPos() + bank.getPlayer().getVelRight() + bank.getPlayer().getVelLeft());
+			bank.getPlayer().setyPos(bank.getPlayer().getyPos() + bank.getPlayer().getVelY());
 	}
 
 	public void changeVelY(double velY) {
-		player.setVelY(velY);
+		bank.getPlayer().setVelY(velY);
 	}
 
 	public void moveLeft() {
-		player.setVelLeft(-3);
-		player.setLeft(true);
+		bank.getPlayer().setVelLeft(-3);
+		bank.getPlayer().setLeft(true);
 	}
 
 	public void moveRight() {
-		player.setVelRight(+3);
-		player.setLeft(false);
+		bank.getPlayer().setVelRight(+3);
+		bank.getPlayer().setLeft(false);
 	}
 
 	public void resetVelLeft() {
-		player.setVelLeft(0);
-		player.setLeft(true);
+		bank.getPlayer().setVelLeft(0);
+		bank.getPlayer().setLeft(true);
 	}
 
 	public void resetVelRight() {
-		player.setVelRight(0);
-		player.setLeft(false);
+		bank.getPlayer().setVelRight(0);
+		bank.getPlayer().setLeft(false);
 	}
 
 	public void jump() {
-		if (player.isColDown()) {
-			player.setColDown(false);
-			player.setVelY(-12);
+		if (bank.getPlayer().isColDown()) {
+			bank.getPlayer().setColDown(false);
+			bank.getPlayer().setVelY(-12);
 		}
 	}
 

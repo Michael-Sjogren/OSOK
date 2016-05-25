@@ -6,12 +6,10 @@ import javafx.scene.shape.Line;
 
 public class Collision {
 
-	List<Platform2D> platforms;
-	Player player;
-
-	public Collision(List<Platform2D> platforms, Player player) {
-		this.platforms = platforms;
-		this.player = player;
+	Bank bank;
+	
+	public Collision(Bank bank) {
+		this.bank=bank;
 
 	}
 
@@ -24,73 +22,73 @@ public class Collision {
 
 	public void checkNorth() {
 		boolean flag = false;
-		for (int i = 0; i < platforms.size(); i++) {
-			if (player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(0).getBoundsInParent())) {
-				if (!player.isFirstTouch()) {
-					player.setVelY(0);
-					player.setFirstTouch(true);
-					player.setyPos(((Line) platforms.get(i).getPlatform().get(0)).getStartY() - player.getBall().getRadius());
+		for (int i = 0; i < bank.getPlatforms().size(); i++) {
+			if (bank.getPlayer().getBall().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(0).getBoundsInParent())) {
+				if (!bank.getPlayer().isFirstTouch()) {
+					bank.getPlayer().setVelY(0);
+					bank.getPlayer().setFirstTouch(true);
+					bank.getPlayer().setyPos(((Line) bank.getPlatforms().get(i).getPlatform().get(0)).getStartY() - bank.getPlayer().getBall().getRadius());
 				}
 				flag = true;
-				player.setColDown(true);
+				bank.getPlayer().setColDown(true);
 			}
-			if (player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(4).getBoundsInParent())) {
-				if (!player.isFirstTouch()) {
-					player.setVelY(0);
-					player.setFirstTouch(true);
-					player.setyPos(((Line) platforms.get(i).getPlatform().get(4)).getStartY() - player.getBall().getRadius());
+			if (bank.getPlayer().getBall().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(4).getBoundsInParent())) {
+				if (!bank.getPlayer().isFirstTouch()) {
+					bank.getPlayer().setVelY(0);
+					bank.getPlayer().setFirstTouch(true);
+					bank.getPlayer().setyPos(((Line) bank.getPlatforms().get(i).getPlatform().get(4)).getStartY() - bank.getPlayer().getBall().getRadius());
 				}
 				flag = true;
-				player.setColDown(true);
+				bank.getPlayer().setColDown(true);
 			}
 		}
 		if (!flag) {
-			player.setFirstTouch(false);
-			player.setColDown(false);
+			bank.getPlayer().setFirstTouch(false);
+			bank.getPlayer().setColDown(false);
 		}
 	}
 
 	public void checkEast() {
 		boolean flag = false;
-		for (int i = 0; i < platforms.size(); i++) {
-			if (player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(1).getBoundsInParent())) {
-					player.setxPos(((Line) platforms.get(i).getPlatform().get(1)).getStartX() + player.getBall().getRadius()+1);
+		for (int i = 0; i < bank.getPlatforms().size(); i++) {
+			if (bank.getPlayer().getBall().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(1).getBoundsInParent())) {
+					bank.getPlayer().setxPos(((Line) bank.getPlatforms().get(i).getPlatform().get(1)).getStartX() + bank.getPlayer().getBall().getRadius()+1);
 				}
 				flag = true;
-				player.setColLeft(true);
+				bank.getPlayer().setColLeft(true);
 			}
 		if (!flag) {
-			player.setColLeft(false);
+			bank.getPlayer().setColLeft(false);
 		}
 	}
 	
 
 	public void checkSouth() {
 		boolean flag = false;
-		for (int i = 0; i < platforms.size(); i++) {
-			if (player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(2).getBoundsInParent())) {
-					player.setVelY(player.getVelY()*-0.4);
-					player.setyPos(((Line) platforms.get(i).getPlatform().get(2)).getEndY() + player.getBall().getRadius());
+		for (int i = 0; i < bank.getPlatforms().size(); i++) {
+			if (bank.getPlayer().getBall().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(2).getBoundsInParent())) {
+					bank.getPlayer().setVelY(bank.getPlayer().getVelY()*-0.4);
+					bank.getPlayer().setyPos(((Line) bank.getPlatforms().get(i).getPlatform().get(2)).getEndY() + bank.getPlayer().getBall().getRadius());
 				}
 				flag = true;
-				player.setColUp(true);
+				bank.getPlayer().setColUp(true);
 			}
 		if (!flag) {
-			player.setColUp(false);
+			bank.getPlayer().setColUp(false);
 		}
 	}
 
 	public void checkWest() {
 		boolean flag = false;
-		for (int i = 0; i < platforms.size(); i++) {
-			if (player.getBall().getBoundsInParent().intersects(platforms.get(i).getPlatform().get(3).getBoundsInParent())) {
-					player.setxPos(((Line) platforms.get(i).getPlatform().get(3)).getStartX() + player.getBall().getRadius()-1);
+		for (int i = 0; i < bank.getPlatforms().size(); i++) {
+			if (bank.getPlayer().getBall().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(3).getBoundsInParent())) {
+					bank.getPlayer().setxPos(((Line) bank.getPlatforms().get(i).getPlatform().get(3)).getStartX() + bank.getPlayer().getBall().getRadius()-1);
 				}
 				flag = true;
-				player.setColRight(true);
+				bank.getPlayer().setColRight(true);
 			}
 		if (!flag) {
-			player.setColRight(false);
+			bank.getPlayer().setColRight(false);
 		}
 	}
 }

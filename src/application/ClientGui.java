@@ -26,11 +26,12 @@ public class ClientGui extends Application {
 	private int port;
 	private String ip;
 	private String username;
+	Bank bank;
 
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		client = new Client(ip , port , username);
+//		client = new Client(ip , port , username);
 		System.out.println("client started");
 		System.out.println("Starting Game");
 		Platform2D p2D0 = new Platform2D(106,150);
@@ -40,18 +41,13 @@ public class ClientGui extends Application {
 		Platform2D p2D4 = new Platform2D(618,500);
 
 		platforms.addAll(Arrays.asList(p2D0, p2D1, p2D2, p2D3, p2D4));
-		player = new Player();
-		move = new Move(player);
-		keyInput = new KeyInput(primaryStage, move);
-		gravity = new Gravity(player);
-		collision = new Collision(platforms, player);
-		game = new Game(move, gravity, collision);
-		thread = new Thread(game);
-		thread.start();
-		scene = new Scene(createContent(player), 1024, 720);
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.show();
+		Bank bank = new Bank(primaryStage);
+		this.bank=bank;
+		bank.setPlatforms(platforms);
+		scene = new Scene(createContent(bank.getPlayer()), 1024, 720);
+		bank.getStage().setScene(scene);
+		bank.getStage().setResizable(false);
+		bank.getStage().show();
 
 	}
 
@@ -74,10 +70,10 @@ public class ClientGui extends Application {
 	}
 	
 	public void stop(){
-		game.setRunning(false);
+		bank.getGame().setRunning(false);
 		try {
-			thread.join();
-			client.shutdown();
+			bank.getThread().join();
+//			client.shutdown();
 			System.out.println("Game Thread and client socket Terminated");
 		} catch (InterruptedException e) {
 			e.printStackTrace();

@@ -1,14 +1,14 @@
 package application;
 
 public class Gravity {
-	Player player;
+	Bank bank;
 
-	public Gravity(Player player) {
-		this.player = player;
+	public Gravity(Bank bank) {
+		this.bank=bank;
 	}
 	public void fall(){
-		if(!player.isColDown()){
-		player.setVelY(player.getVelY()+0.1/.30);
+		if(!bank.getPlayer().isColDown()){
+		bank.getPlayer().setVelY(bank.getPlayer().getVelY()+0.1/.30);
 		}
 	}
 }

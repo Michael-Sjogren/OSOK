@@ -2,47 +2,43 @@ package application;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
-public class KeyInput{
-	
-	private Stage stage;
-	
-	public KeyInput(Stage stage,Move move){
-		
-		stage.addEventHandler(KeyEvent.KEY_PRESSED, ep->{
-			if(ep.getCode()==KeyCode.LEFT){
-				move.moveLeft();
-				}
-		});
-		stage.addEventHandler(KeyEvent.KEY_PRESSED, ep->{
-			if(ep.getCode()==KeyCode.RIGHT){
-				move.moveRight();
-			}
-			
-		});
-		
-		stage.addEventHandler(KeyEvent.KEY_RELEASED, er->{
-			if(er.getCode()==KeyCode.RIGHT){
-				move.resetVelRight();
+public class KeyInput {
+
+	public KeyInput(Bank bank) {
+
+		bank.getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
+			if (ep.getCode() == KeyCode.LEFT) {
+				bank.getMove().moveLeft();
 			}
 		});
 		
-		stage.addEventHandler(KeyEvent.KEY_RELEASED, er->{
-			if(er.getCode()==KeyCode.LEFT){
-				move.resetVelLeft();
-				}
+		bank.getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
+			if (ep.getCode() == KeyCode.RIGHT) {
+				bank.getMove().moveRight();
+			}
+
 		});
-		
-		stage.addEventHandler(KeyEvent.KEY_PRESSED, ej->{
-			if(ej.getCode()==KeyCode.UP){
-				move.jump();
+
+		bank.getStage().addEventHandler(KeyEvent.KEY_RELEASED, er -> {
+			if (er.getCode() == KeyCode.RIGHT) {
+				bank.getMove().resetVelRight();
 			}
 		});
+
+		bank.getStage().addEventHandler(KeyEvent.KEY_RELEASED, er -> {
+			if (er.getCode() == KeyCode.LEFT) {
+				bank.getMove().resetVelLeft();
+			}
+		});
+
+		bank.getStage().addEventHandler(KeyEvent.KEY_PRESSED, ej -> {
+			if (ej.getCode() == KeyCode.UP) {
+				bank.getMove().jump();
+			}
+		});
+
 		
-		
-		
-		this.stage = stage;	
 	}
-	
+
 }

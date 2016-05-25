@@ -10,8 +10,10 @@ public class Player {
 	private Circle ball = new Circle();
 	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
 	private boolean isLeft = true;
+	Bank bank;
 
-	public Player() {
+	public Player(Bank bank) {
+		this.bank=bank;
 		ball.setRadius(size);
 		ball.setCenterX(xPos);
 		ball.setCenterY(yPos);
