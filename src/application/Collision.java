@@ -1,7 +1,5 @@
 package application;
 
-import java.util.List;
-
 import javafx.scene.shape.Line;
 
 public class Collision {

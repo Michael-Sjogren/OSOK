@@ -19,8 +19,8 @@ public class Platform2D{
 
 	/** Enter the startX and startY of the platform **/
 	public Platform2D(double startX, double startY) {
-		this.startX = startX;
-		this.startY = startY;
+		this.setStartX(startX);
+		this.setStartY(startY);
 
 		north = new Line(startX, startY, startX + width, startY);
 		
@@ -38,6 +38,22 @@ public class Platform2D{
 
 	public List<Shape> getPlatform() {
 		return lines;
+	}
+
+	public double getStartX() {
+		return startX;
+	}
+
+	public void setStartX(double startX) {
+		this.startX = startX;
+	}
+
+	public double getStartY() {
+		return startY;
+	}
+
+	public void setStartY(double startY) {
+		this.startY = startY;
 	}
 
 }
