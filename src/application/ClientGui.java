@@ -13,15 +13,6 @@ import osok.network.client.Client;
 import sun.security.x509.IPAddressName;
 
 public class ClientGui extends Application {
-	private Thread thread;
-	private Game game;
-	private Move move;
-	private Client client;
-	private KeyInput keyInput;
-	private Player player;
-	private Scene scene;
-	private Gravity gravity;
-	private Collision collision;
 	private List<Platform2D> platforms = new ArrayList<Platform2D>();
 	private int port;
 	private String ip;
@@ -44,7 +35,7 @@ public class ClientGui extends Application {
 		Bank bank = new Bank(primaryStage);
 		this.bank=bank;
 		bank.setPlatforms(platforms);
-		scene = new Scene(createContent(bank.getPlayer()), 1024, 720);
+		Scene scene = new Scene(createContent(bank.getPlayer()), 1024, 720);
 		bank.getStage().setScene(scene);
 		bank.getStage().setResizable(false);
 		bank.getStage().show();
