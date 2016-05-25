@@ -60,7 +60,6 @@ public class testMain extends Application{
 
     public static void main(String[] args )
     {
-        client = new Client(ip , port , "testClient");
         System.out.println("client started");
         launch(args);
     }

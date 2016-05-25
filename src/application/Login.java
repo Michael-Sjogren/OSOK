@@ -15,10 +15,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import osok.network.client.Client;
 
 public class Login extends Application{
-	Bank bank;
-	Stage stage;
+	private Bank bank;
+	private Stage stage;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -68,7 +69,24 @@ public class Login extends Application{
 
 		Button btn = new Button("Logga in!");
 		btn.setOnAction(e-> {
-			bank.getLogin().getStage().setScene(bank.getGui().getScene());
+            if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals(""))){
+
+                Player player =	bank.getPlayer();
+                player.setIp(ip.getText());
+                player.setPort(Integer.parseInt(port.getText()));
+                player.setUsername(userName.getText());
+
+                System.out.println(player.getUsername());
+                System.out.println(player.getIp());
+                System.out.println(player.getPort());
+
+
+                new Client(bank);
+                if(player.isConnected()){
+
+                    bank.getLogin().getStage().setScene(bank.getGui().getScene());
+                }
+            }
 		});
 
 		HBox hbBtn = new HBox(10);

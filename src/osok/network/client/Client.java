@@ -1,6 +1,8 @@
 package osok.network.client;
 
 
+import application.Bank;
+import application.Player;
 import javafx.scene.shape.Circle;
 
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.net.Socket;
 /**
  * Created by Michael Sjögren on 2016-05-20.
  */
-public class Client {
+public class Client extends Player{
     private int port;
     private String ip;
     private ClientRead read;
@@ -20,26 +22,34 @@ public class Client {
     private Thread readingThread;
     private Socket socket;
     private String username;
-
+    private Bank bank;
+    private Player player;
 
 
     /* konstruktor */
-    public Client(String ip, int port , String username){
-    this.ip = ip;
-    this.port = port;
-    this.username = username;
+    public Client(Bank bank){
+     super(bank);
+        this.player = bank.getPlayer();
 
-       try {
-           Socket socket = new Socket("127.0.0.1", 55556);
+
+        try {
+           Socket socket = new Socket(player.getIp(), player.getPort());
+            if(socket.isClosed()){
+                return;
+            }else{
+                player.setIsConnected(true);
+            }
+
            this.socket = socket;
         } catch (IOException e) {
+
             e.printStackTrace();
         }
 
         System.out.println(" -- Client connected -- ");
 
                     /* start write thread for client */
-        write = new ClientWrite(socket );
+        write = new ClientWrite(socket , player );
         writingThread = new Thread(write , "-- client-write-thread -- ");
         writingThread.start();
 
@@ -101,11 +111,14 @@ class ClientRead implements Runnable{
  }
     /** writes to server **/
 class ClientWrite implements Runnable{
-    private Socket socket;
-    private boolean running = true;
 
-    public ClientWrite(Socket socket){
+        private Socket socket;
+        private Player player;
+        private boolean running = true;
+
+    public ClientWrite(Socket socket , Player player){
         this.socket = socket;
+        this.player = player;
     }
 
     @Override

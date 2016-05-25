@@ -2,14 +2,17 @@ package application;
 
 import javafx.scene.shape.Circle;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable{
+	private  boolean connected;
 	private String username;
 	private int port;
 	private String ip;
 	private final double size = 20.0;
 	private double yPos = 10.0, xPos = 512.0, velY = 0;
 	private double velLeft = 0, velRight = 0;
-	private Circle ball = new Circle();
+	private transient Circle ball = new Circle();
 	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
 	private boolean isLeft = true;
 	Bank bank;
@@ -139,4 +142,11 @@ public class Player {
 		this.ip = ip;
 	}
 
+	public void setIsConnected(boolean Connected){
+		this.connected = Connected;
+	}
+
+	public boolean isConnected() {
+		return connected;
+	}
 }
