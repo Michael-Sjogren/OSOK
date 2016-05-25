@@ -4,6 +4,8 @@ import javafx.scene.shape.Circle;
 
 public class Player {
 	private String username;
+	private int port;
+	private String ip;
 	private final double size = 20.0;
 	private double yPos = 10.0, xPos = 512.0, velY = 0;
 	private double velLeft = 0, velRight = 0;
@@ -119,6 +121,22 @@ public class Player {
 
 	public void setLeft(boolean isLeft) {
 		this.isLeft = isLeft;
+	}
+
+	public int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 }

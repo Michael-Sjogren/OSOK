@@ -15,18 +15,22 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Login extends Application{
-
-
+	Bank bank;
+	Stage stage;
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		this.stage=primaryStage;
+		bank = new Bank(this);
 		BorderPane pane = new BorderPane();
-		Scene scene = new Scene(pane, 1024, 720);
 		pane.setCenter(addGridPane());
+		Scene scene = new Scene(pane, 1024, 720);
 
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.show();
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
 	}
+
 
 	public GridPane addGridPane() {
 		GridPane grid = new GridPane();
@@ -57,6 +61,9 @@ public class Login extends Application{
 		grid.add(port, 1, 3);
 
 		Button btn = new Button("Logga in!");
+		btn.setOnAction(e-> {
+			bank.getLogin().getStage().setScene(bank.getGui().getScene());
+		});
 
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -70,5 +77,25 @@ public class Login extends Application{
 		actiontarget.setId("actiontarget");
 
 		return grid;
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	public void stop(){
+		bank.getGame().setRunning(false);
+		try {
+			bank.getThread().join();
+			System.out.println("Game Thread and client socket Terminated");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 }

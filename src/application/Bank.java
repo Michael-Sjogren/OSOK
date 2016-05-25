@@ -3,8 +3,6 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.stage.Stage;
-
 public class Bank {
 
 	Player player;
@@ -14,12 +12,13 @@ public class Bank {
 	Collision collision;
 	Game game;
 	Thread thread;
-	Stage stage;
+	ClientGui gui;
+	Login login;
 
 	private List<Platform2D> platforms = new ArrayList<Platform2D>();
 
-	public Bank(Stage stage) {
-		this.stage=stage;
+	public Bank(Login login) {
+		this.login = login;
 		player = new Player(this);
 		move = new Move(this);
 		keyInput = new KeyInput(this);
@@ -27,6 +26,7 @@ public class Bank {
 		collision = new Collision(this);
 		game = new Game(this);
 		thread = new Thread(game);
+		gui = new ClientGui(this);
 		thread.start();
 		
 	}
@@ -94,11 +94,19 @@ public class Bank {
 	public void setPlatforms(List<Platform2D> platforms) {
 		this.platforms = platforms;
 	}
-	public Stage getStage() {
-		return stage;
+	public ClientGui getGui() {
+		return gui;
 	}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
+	public void setGui(ClientGui gui) {
+		this.gui = gui;
+	}
+
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 }
