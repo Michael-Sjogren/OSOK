@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import osok.network.client.Client;
 
@@ -29,6 +31,10 @@ public class ClientGui{
 
 	public Parent createContent(Player player) {
 		BorderPane root = new BorderPane();
+		Image image = new Image("application/Sprite-0002.png");
+		ImageView iv1 = new ImageView();
+		iv1.setImage(image);
+		root.getChildren().add(iv1);
 		root.getChildren().add(bank.getPlayer().getBall());
 		for(int i = 0; i<bank.getPlatforms().size();i++){
 			for(int j = 0;j<bank.getPlatforms().get(i).getPlatform().size();j++){

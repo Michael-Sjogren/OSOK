@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 public class Platform2D{
@@ -30,7 +31,8 @@ public class Platform2D{
 
 		west = new Line(startX, startY, startX, startY + height);
 		
-		Line floor = new Line(0,680,1024,680);
+		Line floor = new Line(0,675,1024,675);
+		floor.setStroke(Color.TRANSPARENT);
 
 		lines.addAll(Arrays.asList(north, west, south, east, floor));
 

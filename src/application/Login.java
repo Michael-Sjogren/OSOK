@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -23,8 +25,12 @@ public class Login extends Application{
 		this.stage=primaryStage;
 		bank = new Bank(this);
 		BorderPane pane = new BorderPane();
+		Image image = new Image("application/Sprite-0003.png");
+		ImageView iv1 = new ImageView();
+		iv1.setImage(image);
+		pane.getChildren().add(iv1);
 		pane.setCenter(addGridPane());
-		Scene scene = new Scene(pane, 1024, 720);
+		Scene scene = new Scene(pane, 1014, 710);
 
 		stage.setScene(scene);
 		stage.setResizable(false);
