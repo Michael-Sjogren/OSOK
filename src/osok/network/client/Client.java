@@ -69,11 +69,19 @@ public class Client extends Player{
         read.isRunning(false);
         write.isRunning(false);
         try {
-            readingThread.join();
-            writingThread.join();
+            if(readingThread != null && writingThread != null){
+                readingThread.join();
+                writingThread.join();
+                socket.close();
+            }else{
+                return;
+            }
+
             System.out.println("-- client all threads terminated --");
 
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -83,7 +91,7 @@ public class Client extends Player{
 class ClientRead implements Runnable{
 
     private Socket socket;
-    private boolean running = true;
+    private volatile boolean running = true;
 
     public ClientRead(Socket socket){
             this.socket = socket;
@@ -114,7 +122,7 @@ class ClientWrite implements Runnable{
 
         private Socket socket;
         private Player player;
-        private boolean running = true;
+        private volatile boolean running = true;
 
     public ClientWrite(Socket socket , Player player){
         this.socket = socket;

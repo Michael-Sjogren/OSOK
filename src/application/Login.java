@@ -20,8 +20,9 @@ import osok.network.client.Client;
 public class Login extends Application{
 	private Bank bank;
 	private Stage stage;
-	
-	@Override
+    private Client client;
+
+    @Override
 	public void start(Stage primaryStage) throws Exception {
 		this.stage=primaryStage;
 		bank = new Bank(this);
@@ -80,8 +81,7 @@ public class Login extends Application{
                 System.out.println(player.getIp());
                 System.out.println(player.getPort());
 
-
-                new Client(bank);
+                client = new Client(bank);
                 if(player.isConnected()){
 
                     bank.getLogin().getStage().setScene(bank.getGui().getScene());
@@ -106,12 +106,14 @@ public class Login extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-	public void stop(){
+	
+    public void stop(){
 		bank.getGame().setRunning(false);
+        client.shutdown();
 		try {
 			bank.getThread().join();
 			System.out.println("Game Thread and client socket Terminated");
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
