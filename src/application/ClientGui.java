@@ -43,7 +43,8 @@ public class ClientGui{
 			for(int j = 0;j<bank.getPlatforms().get(i).getPlatform().size();j++){
 				root.getChildren().add(bank.getPlatforms().get(i).getPlatform().get(j));
 			}
-			
+			root.getChildren().add(bank.getPlatforms().get(i).getImage());
+
 		}
 		return root;
 	}
