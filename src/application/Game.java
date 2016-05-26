@@ -1,5 +1,7 @@
 package application;
 
+import javafx.scene.shape.Line;
+
 public class Game implements Runnable {
 	
 	Bank bank;
@@ -48,6 +50,9 @@ public class Game implements Runnable {
 		bank.getCollision().checkCollision();
 		bank.getGravity().fall();
 		bank.getMove().movePlayer();
+		for(Bullet bullet : bank.getPlayer().getBulletList()){
+			bullet.moveBullet();
+		}
 	}
 	public boolean isRunning() {
 		return running;

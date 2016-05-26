@@ -1,10 +1,11 @@
 package application;
 
-import javafx.scene.shape.Circle;
-
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player implements Serializable{
+	private List<Bullet> bulletList = new ArrayList<Bullet>();
 	private  boolean connected;
 	private String username;
 	private int port;
@@ -12,16 +13,16 @@ public class Player implements Serializable{
 	private final double size = 20.0;
 	private double yPos = 10.0, xPos = 512.0, velY = 0;
 	private double velLeft = 0, velRight = 0;
-	private transient Circle ball = new Circle();
 	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
 	private boolean isLeft = true;
 	Bank bank;
 
 	public Player(Bank bank) {
 		this.bank=bank;
-		ball.setRadius(size);
-		ball.setCenterX(xPos);
-		ball.setCenterY(yPos);
+	}
+
+	public double getSize() {
+		return size;
 	}
 
 	public String getUsername() {
@@ -38,7 +39,7 @@ public class Player implements Serializable{
 
 	public void setxPos(Double xPos) {
 		this.xPos = xPos;
-		ball.setCenterX(xPos);
+		bank.getGui().getPlayerCircle().setCenterX(xPos);
 	}
 
 	public Double getyPos() {
@@ -47,11 +48,7 @@ public class Player implements Serializable{
 
 	public void setyPos(Double yPos) {
 		this.yPos = yPos;
-		ball.setCenterY(yPos);
-	}
-
-	public Circle getBall() {
-		return ball;
+		bank.getGui().getPlayerCircle().setCenterY(yPos);
 	}
 
 	public double getVelY() {
@@ -148,5 +145,13 @@ public class Player implements Serializable{
 
 	public boolean isConnected() {
 		return connected;
+	}
+
+	public List<Bullet> getBulletList() {
+		return bulletList;
+	}
+
+	public void setBulletList(List<Bullet> bulletList) {
+		this.bulletList = bulletList;
 	}
 }

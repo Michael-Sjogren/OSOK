@@ -7,12 +7,15 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Circle;
 import osok.network.client.Client;
 
 public class ClientGui{
-	Client client;
-	Bank bank;
-	Scene scene;
+	private Client client;
+	private Bank bank;
+	private Scene scene;
+	private BorderPane root;
+	private Circle playerCircle;
 
 
 	public ClientGui(Bank bank) {
@@ -30,12 +33,12 @@ public class ClientGui{
 	}
 
 	public Parent createContent(Player player) {
-		BorderPane root = new BorderPane();
+		root = new BorderPane();
 		Image image = new Image("application/Sprite-0002.png");
 		ImageView iv1 = new ImageView();
+		playerCircle = new Circle(bank.getPlayer().getxPos(),bank.getPlayer().getyPos(),bank.getPlayer().getSize());
 		iv1.setImage(image);
-		root.getChildren().add(iv1);
-		root.getChildren().add(bank.getPlayer().getBall());
+		root.getChildren().addAll(iv1,playerCircle);
 		for(int i = 0; i<bank.getPlatforms().size();i++){
 			for(int j = 0;j<bank.getPlatforms().get(i).getPlatform().size();j++){
 				root.getChildren().add(bank.getPlatforms().get(i).getPlatform().get(j));
@@ -45,12 +48,28 @@ public class ClientGui{
 		return root;
 	}
 
+	public BorderPane getRoot() {
+		return root;
+	}
+
+	public void setRoot(BorderPane root) {
+		this.root = root;
+	}
+
 	public Scene getScene() {
 		return scene;
 	}
 
 	public void setScene(Scene scene) {
 		this.scene = scene;
+	}
+
+	public Circle getPlayerCircle() {
+		return playerCircle;
+	}
+
+	public void setPlayerCircle(Circle playerCircle) {
+		this.playerCircle = playerCircle;
 	}
 	
 	

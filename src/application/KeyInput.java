@@ -11,12 +11,19 @@ public class KeyInput {
 			if (ep.getCode() == KeyCode.LEFT) {
 				bank.getMove().moveLeft();
 			}
-		});
-		
-		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
+			if (ep.getCode() == KeyCode.SPACE) {
+				Bullet bullet = new Bullet(bank.getPlayer(),bank);
+			}
 			if (ep.getCode() == KeyCode.RIGHT) {
 				bank.getMove().moveRight();
 			}
+			if (ep.getCode() == KeyCode.UP) {
+				bank.getMove().jump();
+			}
+		});
+
+		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
+			
 
 		});
 
@@ -24,21 +31,22 @@ public class KeyInput {
 			if (er.getCode() == KeyCode.RIGHT) {
 				bank.getMove().resetVelRight();
 			}
-		});
-
-		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_RELEASED, er -> {
 			if (er.getCode() == KeyCode.LEFT) {
 				bank.getMove().resetVelLeft();
 			}
 		});
 
-		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ej -> {
-			if (ej.getCode() == KeyCode.UP) {
-				bank.getMove().jump();
-			}
+		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_RELEASED, er -> {
+			
 		});
 
-		
+		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ej -> {
+			
+			bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, es -> {
+				
+			});
+		});
+
 	}
 
 }

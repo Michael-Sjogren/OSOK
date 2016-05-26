@@ -10,6 +10,7 @@ public class Move {
 	public void movePlayer() {
 		bank.getPlayer().setxPos(bank.getPlayer().getxPos() + bank.getPlayer().getVelRight() + bank.getPlayer().getVelLeft());
 			bank.getPlayer().setyPos(bank.getPlayer().getyPos() + bank.getPlayer().getVelY());
+			
 	}
 
 	public void changeVelY(double velY) {
