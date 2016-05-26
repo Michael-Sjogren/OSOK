@@ -70,23 +70,23 @@ public class Login extends Application{
 
 		Button btn = new Button("Logga in!");
 		btn.setOnAction(e-> {
-            if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals(""))){
+          /*  if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals(""))){ */
 
                 Player player =	bank.getPlayer();
-                player.setIp(ip.getText());
-                player.setPort(Integer.parseInt(port.getText()));
-                player.setUsername(userName.getText());
+            //    player.setIp(ip.getText());
+           //     player.setPort(Integer.parseInt(port.getText()));
+            //    player.setUsername(userName.getText());
 
-                System.out.println(player.getUsername());
-                System.out.println(player.getIp());
-                System.out.println(player.getPort());
+            //    System.out.println(player.getUsername());
+           //     System.out.println(player.getIp());
+           //     System.out.println(player.getPort());
 
                 client = new Client(bank);
                 if(player.isConnected()){
 
                     bank.getLogin().getStage().setScene(bank.getGui().getScene());
                 }
-            }
+         //   }
 		});
 
 		HBox hbBtn = new HBox(10);

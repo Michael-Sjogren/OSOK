@@ -33,7 +33,7 @@ public class Client extends Player{
 
 
         try {
-           Socket socket = new Socket(player.getIp(), player.getPort());
+           Socket socket = new Socket( /*player.getIp() */ "localhost",/* player.getPort()*/ 55556);
             if(socket.isClosed()){
                 return;
             }else{
