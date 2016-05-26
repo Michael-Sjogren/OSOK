@@ -3,11 +3,8 @@ package osok.network.client;
 
 import application.Bank;
 import application.Player;
-import javafx.scene.shape.Circle;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import com.google.gson.Gson;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -31,7 +28,6 @@ public class Client extends Player{
      super();
         this.player = bank.getPlayer();
 
-
         try {
            Socket socket = new Socket( /*player.getIp() */ "localhost",/* player.getPort()*/ 55556);
             if(socket.isClosed()){
@@ -50,19 +46,14 @@ public class Client extends Player{
 
                     /* start write thread for client */
         write = new ClientWrite(socket , player );
-        writingThread = new Thread(write , "-- client-write-thread -- ");
+        writingThread = new Thread(write , " client-write-thread ");
         writingThread.start();
 
             /* start read thread for client */
         read = new ClientRead(socket);
-        readingThread = new Thread(read , " -- client-read-thread --");
+        readingThread = new Thread(read , "  client-read-thread ");
         readingThread.start();
-
-
     }
-
-
-
 
     /** terminates threads **/
     public void shutdown()  {
@@ -73,11 +64,8 @@ public class Client extends Player{
                 readingThread.join();
                 writingThread.join();
                 socket.close();
-            }else{
-                return;
+                System.out.println("-- client all threads terminated --");
             }
-
-            System.out.println("-- client all threads terminated --");
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -100,14 +88,14 @@ class ClientRead implements Runnable{
     @Override
     public void run(){
             System.out.println(socket.isConnected());
-            try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            while(running){
-                Thread.sleep(1000);
-                String s = (String) ois.readObject();
-                System.out.println(s);
-            }
-                System.out.println(" -- client isRunning read : " + running + " --");
+                 while(running){
+                     Thread.sleep(3000);
+
+                   /** reads from server just prints out : SERVER :: Writing to Client **/
+                //     System.out.println(br.readLine());
+                 }
             }catch (Exception e){
             e.printStackTrace();
             }
@@ -123,6 +111,7 @@ class ClientWrite implements Runnable{
         private Socket socket;
         private Player player;
         private volatile boolean running = true;
+        private Gson gson;
 
     public ClientWrite(Socket socket , Player player){
         this.socket = socket;
@@ -132,15 +121,14 @@ class ClientWrite implements Runnable{
     @Override
     public void run(){
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream())){
-            System.out.println("CLIENT WRITE START");
+        try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
+            gson = new Gson();
             while(running){
-                Thread.sleep(1000);
-                String s = "CLIENT :: Client writing to server";
-                oos.writeObject(s);
-
+                Thread.sleep(1);
+                String s = gson.toJson(player);
+                pw.println(s);
+                pw.flush();
             }
-            System.out.println(" -- client isRunning write : " + running + " -- ");
         }catch (Exception e){
             e.printStackTrace();
         }

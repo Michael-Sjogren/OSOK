@@ -1,18 +1,17 @@
 package osok.network.server;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import application.Player;
+import com.google.gson.Gson;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server {
 
     private static Socket csocket;
-    private static ServerRead read;
-    private static ServerWrite write;
-    private static Thread threadRead;
-    private static Thread threadWrite;
+    private static ArrayList<Socket> clients = new ArrayList<>();
 
 
     public static void main(String args[]) {
@@ -22,12 +21,15 @@ public class Server {
             ServerSocket ssock = new ServerSocket(55556);
             System.out.println("isServerSocket closed : " + ssock.isClosed());
             while (true) {
-
-                csocket = ssock.accept();
-                new Thread(new ServerRead(csocket)).start();
-                new Thread(new ServerWrite(csocket)).start();
-                System.out.println("client connected" + "");
-
+                if(clients.size() < 5){
+                    csocket = ssock.accept();
+                    new Thread(new ServerRead(csocket)).start();
+                    new Thread(new ServerWrite(csocket)).start();
+                    System.out.println("client connected" + "");
+                    clients.add(csocket);
+                }else if (clients.size() >= 5){
+                    System.out.println("player max limit");
+                }
             }
 
 
@@ -41,26 +43,26 @@ public class Server {
     /** Reads Client **/
      class ServerRead implements Runnable {
         private Socket csocket;
+        private Gson gson;
+        private Player player;
+
         public ServerRead(Socket csocket) {
             this.csocket = csocket;
         }
 
         @Override
         public void run() {
-            try(ObjectInputStream ois = new ObjectInputStream(csocket.getInputStream())) {
-
+            try(BufferedReader br = new BufferedReader(new InputStreamReader(csocket.getInputStream()))) {
+                gson = new Gson();
                 while(true){
-                    Thread.sleep(1000);
-                    String s = (String) ois.readObject();
-                    System.out.println(s);
-
+                    Thread.sleep(1);
+                     String object = br.readLine();
+                     player = gson.fromJson(object,Player.class);
                 }
             }
             catch (IOException e) {
                 System.out.println(e);
             } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
@@ -76,13 +78,12 @@ public class Server {
         }
 
         public void run() {
-            try(ObjectOutputStream oos = new ObjectOutputStream(csocket.getOutputStream())) {
-
+            try(PrintWriter pw = new PrintWriter(csocket.getOutputStream())) {
 
                 while(true){
                    Thread.sleep(1000);
-                   oos.writeObject("SERVER :: Writing to Client");
-
+                    pw.println("SERVER :: Writing to Client");
+                    pw.flush();
                 }
             }
             catch (IOException e) {

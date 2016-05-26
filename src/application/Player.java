@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Player implements Serializable{
-	private LinkedList<Bullet> bulletList = new LinkedList<Bullet>();
+	// transient keyword makes field un serializiable
+	private transient LinkedList<Bullet> bulletList = new LinkedList<Bullet>();
 	private  boolean connected;
 	private String username;
 	private int port;
