@@ -9,8 +9,15 @@ public class Move {
 
 	public void movePlayer() {
 		bank.getPlayer().setxPos(bank.getPlayer().getxPos() + bank.getPlayer().getVelRight() + bank.getPlayer().getVelLeft());
-			bank.getPlayer().setyPos(bank.getPlayer().getyPos() + bank.getPlayer().getVelY());
+	    bank.getPlayer().setyPos(bank.getPlayer().getyPos() + bank.getPlayer().getVelY());
+	    updatePlayerBall();
 			
+	}
+	
+	public void updatePlayerBall(){
+		bank.getGui().getPlayerCircle().setCenterX(bank.getPlayer().getxPos());
+		bank.getGui().getPlayerCircle().setCenterY(bank.getPlayer().getyPos());
+		bank.getGui().getPlayerCircle().setCenterY(bank.getPlayer().getyPos());
 	}
 
 	public void changeVelY(double velY) {

@@ -28,7 +28,7 @@ public class Client extends Player{
 
     /* konstruktor */
     public Client(Bank bank){
-     super(bank);
+     super();
         this.player = bank.getPlayer();
 
 

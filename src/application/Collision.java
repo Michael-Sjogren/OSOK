@@ -26,6 +26,7 @@ public class Collision {
 					bank.getPlayer().setVelY(0);
 					bank.getPlayer().setFirstTouch(true);
 					bank.getPlayer().setyPos(((Line) bank.getPlatforms().get(i).getPlatform().get(0)).getStartY() - bank.getGui().getPlayerCircle().getRadius());
+					bank.getMove().updatePlayerBall();
 				}
 				flag = true;
 				bank.getPlayer().setColDown(true);
@@ -35,6 +36,7 @@ public class Collision {
 					bank.getPlayer().setVelY(0);
 					bank.getPlayer().setFirstTouch(true);
 					bank.getPlayer().setyPos(((Line) bank.getPlatforms().get(i).getPlatform().get(4)).getStartY() - bank.getGui().getPlayerCircle().getRadius());
+					bank.getMove().updatePlayerBall();
 				}
 				flag = true;
 				bank.getPlayer().setColDown(true);
@@ -51,7 +53,8 @@ public class Collision {
 		for (int i = 0; i < bank.getPlatforms().size(); i++) {
 			if (bank.getGui().getPlayerCircle().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(1).getBoundsInParent())) {
 					bank.getPlayer().setxPos(((Line) bank.getPlatforms().get(i).getPlatform().get(1)).getStartX() + bank.getGui().getPlayerCircle().getRadius()+1);
-				}
+					bank.getMove().updatePlayerBall();	
+			}
 				flag = true;
 				bank.getPlayer().setColLeft(true);
 			}
@@ -67,6 +70,7 @@ public class Collision {
 			if (bank.getGui().getPlayerCircle().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(2).getBoundsInParent())) {
 					bank.getPlayer().setVelY(bank.getPlayer().getVelY()*-0.4);
 					bank.getPlayer().setyPos(((Line) bank.getPlatforms().get(i).getPlatform().get(2)).getEndY() + bank.getGui().getPlayerCircle().getRadius());
+					bank.getMove().updatePlayerBall();
 				}
 				flag = true;
 				bank.getPlayer().setColUp(true);
@@ -81,6 +85,7 @@ public class Collision {
 		for (int i = 0; i < bank.getPlatforms().size(); i++) {
 			if (bank.getGui().getPlayerCircle().getBoundsInParent().intersects(bank.getPlatforms().get(i).getPlatform().get(3).getBoundsInParent())) {
 					bank.getPlayer().setxPos(((Line) bank.getPlatforms().get(i).getPlatform().get(3)).getStartX() + bank.getGui().getPlayerCircle().getRadius()-1);
+					bank.getMove().updatePlayerBall();
 				}
 				flag = true;
 				bank.getPlayer().setColRight(true);

@@ -19,7 +19,7 @@ public class Bank {
 
 	public Bank(Login login) {
 		this.login = login;
-		player = new Player(this);
+		player = new Player();
 		move = new Move(this);
 		keyInput = new KeyInput(this);
 		gravity = new Gravity(this);

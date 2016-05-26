@@ -1,11 +1,11 @@
 package application;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Player implements Serializable{
-	private List<Bullet> bulletList = new ArrayList<Bullet>();
+	private LinkedList<Bullet> bulletList = new LinkedList<Bullet>();
 	private  boolean connected;
 	private String username;
 	private int port;
@@ -15,10 +15,8 @@ public class Player implements Serializable{
 	private double velLeft = 0, velRight = 0;
 	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
 	private boolean isLeft = true;
-	Bank bank;
 
-	public Player(Bank bank) {
-		this.bank=bank;
+	public Player() {
 	}
 
 	public double getSize() {
@@ -39,7 +37,6 @@ public class Player implements Serializable{
 
 	public void setxPos(Double xPos) {
 		this.xPos = xPos;
-		bank.getGui().getPlayerCircle().setCenterX(xPos);
 	}
 
 	public Double getyPos() {
@@ -48,7 +45,6 @@ public class Player implements Serializable{
 
 	public void setyPos(Double yPos) {
 		this.yPos = yPos;
-		bank.getGui().getPlayerCircle().setCenterY(yPos);
 	}
 
 	public double getVelY() {
@@ -151,7 +147,7 @@ public class Player implements Serializable{
 		return bulletList;
 	}
 
-	public void setBulletList(List<Bullet> bulletList) {
+	public void setBulletList(LinkedList<Bullet> bulletList) {
 		this.bulletList = bulletList;
 	}
 }

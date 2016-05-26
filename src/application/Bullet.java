@@ -1,7 +1,6 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 import javafx.scene.shape.Line;
 
@@ -40,21 +39,14 @@ public class Bullet {
 		distanceTravelled += velX;
 		
 		if (distanceTravelled > 1200) {
-			deleteBullet();
+//			deleteBullet();
 		}
 	}
 
 	public void deleteBullet() {
-		System.out.println("Delete Button");
-		List<Bullet> temp = new ArrayList<Bullet>();
-		for (int i = 0; i < player.getBulletList().size(); i++) {
-			if (player.getBulletList().get(i).equals(this)) {
+		System.out.println("Delete Bullet");
+		bank.getPlayer().getBulletList().remove(this);
 				
-			}else{
-				temp.add(player.getBulletList().get(i));
-			}
 		}
-		player.setBulletList(temp);
-	}
 
 }
