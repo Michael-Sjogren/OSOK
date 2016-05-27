@@ -111,4 +111,12 @@ public class Bank {
 	public void setLogin(Login login) {
 		this.login = login;
 	}
+
+	public Opponents getOpponents() {
+		return opponents;
+	}
+
+	public void setOpponents(Opponents opponents) {
+		this.opponents = opponents;
+	}
 }

@@ -46,12 +46,12 @@ public class Client extends Player{
         System.out.println(" -- Client connected -- ");
 
                     /* start write thread for client */
-        write = new ClientWrite(socket , player );
+        write = new ClientWrite(socket , bank );
         writingThread = new Thread(write , " client-write-thread ");
         writingThread.start();
 
             /* start read thread for client */
-        read = new ClientRead(socket);
+        read = new ClientRead(socket,bank);
         readingThread = new Thread(read , "  client-read-thread ");
         readingThread.start();
     }
@@ -80,12 +80,14 @@ public class Client extends Player{
 class ClientRead implements Runnable{
 
     private Socket socket;
+    private Bank bank;
     private volatile boolean running = true;
     private  ArrayList<String> oldPlayers;
-    private ArrayList<Player> newPlayers;
+    private ArrayList<Player> newPlayers = new ArrayList<Player>();
 
-    public ClientRead(Socket socket){
+    public ClientRead(Socket socket, Bank bank){
             this.socket = socket;
+            this.bank=bank;
             }
 
     @Override
@@ -96,7 +98,7 @@ class ClientRead implements Runnable{
 
 
                  while(running){
-                     Thread.sleep(1000);
+                     Thread.sleep(17);
                             newPlayers.clear();
                    /** reads from server just prints out : SERVER :: Writing to Client **/
 
@@ -106,6 +108,7 @@ class ClientRead implements Runnable{
                             for(int i = 0; i < oldPlayers.size(); i++){
                                 newPlayers.add(gson.fromJson(oldPlayers.get(i), Player.class));
                             }
+                            bank.getOpponents().setOpponentsList(newPlayers);
                      }catch (Exception e){
                          System.out.println(e.getMessage());
                      }
@@ -126,13 +129,13 @@ class ClientRead implements Runnable{
 class ClientWrite implements Runnable{
 
         private Socket socket;
-        private Player player;
+        private Bank bank;
         private volatile boolean running = true;
         private Gson gson;
 
-    public ClientWrite(Socket socket , Player player){
+    public ClientWrite(Socket socket , Bank bank){
         this.socket = socket;
-        this.player = player;
+       this.bank=bank;
     }
 
     @Override
@@ -141,8 +144,8 @@ class ClientWrite implements Runnable{
         try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
             gson = new Gson();
             while(running){
-                Thread.sleep(1000);
-                pw.println(gson.toJson(player));
+                Thread.sleep(17);
+                pw.println(gson.toJson(bank.getPlayer()));
                 pw.flush();
             }
         }catch (Exception e){

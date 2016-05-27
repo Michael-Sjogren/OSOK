@@ -61,6 +61,9 @@ public class ClientGui {
             root.getChildren().add(bank.getPlatforms().get(i).getImage());
 
         }
+        for (int i = 0; i < 5; i++) {
+			root.getChildren().add(bank.getOpponents().getOpponentsCircleList().get(i));
+		}
         return root;
     }
 

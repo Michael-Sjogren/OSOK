@@ -53,6 +53,8 @@ public class Game implements Runnable {
 		for(Bullet bullet : bank.getPlayer().getBulletList()){
 			bullet.moveBullet();
 		}
+		bank.getOpponents().updateOpponents();
+		
 	}
 	public boolean isRunning() {
 		return running;
