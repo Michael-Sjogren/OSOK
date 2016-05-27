@@ -1,5 +1,6 @@
 package osok.network.server;
 
+import application.Bank;
 import application.Player;
 import com.google.gson.Gson;
 
@@ -124,14 +125,9 @@ public class Server {
             if (clients.get(i).isClosed() == true){
 
                 System.out.println(clients.get(i).getLocalAddress());
-                try {
-                    csocket.close();
-                    clients.remove(i);
-                    players.remove(i);
-                    System.out.println("connection closed");
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
+                clients.remove(i);
+                players.remove(i);
+                System.out.println("connection closed");
             }
         }
     }
