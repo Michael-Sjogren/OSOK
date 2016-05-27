@@ -55,7 +55,7 @@ public class Server {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(csocket.getInputStream()))) {
                 gson = new Gson();
                 while (true) {
-                   // Thread.sleep(20);
+                    Thread.sleep(1);
                     String object = br.readLine();
                     player = gson.fromJson(object, Player.class);
                     for (int i = 0; i < clients.size(); i++) {
@@ -88,7 +88,7 @@ public class Server {
             try (PrintWriter pw = new PrintWriter(csocket.getOutputStream())) {
 
                 while (true) {
-                   // Thread.sleep(20);
+                    Thread.sleep(1);
                     pw.println(stringifiyInfo(players , clients , csocket));
                     pw.flush();
                 }

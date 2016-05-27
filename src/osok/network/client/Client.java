@@ -98,7 +98,7 @@ class ClientRead implements Runnable{
 
 
                  while(running){
-                    // Thread.sleep(17);
+                     Thread.sleep(1);
                             newPlayers.clear();
                    /** reads from server just prints out : SERVER :: Writing to Client **/
 
@@ -144,7 +144,7 @@ class ClientWrite implements Runnable{
         try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
             gson = new Gson();
             while(running){
-              //  Thread.sleep(17);
+                Thread.sleep(1);
                 pw.println(gson.toJson(bank.getPlayer()));
               //  pw.println(bank.getPlayer().getxPos());
                // pw.println(bank.getPlayer().getyPos());
