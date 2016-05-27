@@ -11,6 +11,7 @@ public class KeyInput {
 			if (ep.getCode() == KeyCode.LEFT) {
 				bank.getMove().moveLeft();
 				bank.getGui().getPlayerCircle().setFill(bank.getGui().getPatternLookLeft());
+				bank.getPlayer().setLeft(true);
 			}
 			if (ep.getCode() == KeyCode.SPACE) {
 				Bullet bullet = new Bullet(bank.getPlayer(),bank);
@@ -18,6 +19,7 @@ public class KeyInput {
 			if (ep.getCode() == KeyCode.RIGHT) {
 				bank.getMove().moveRight();
 				bank.getGui().getPlayerCircle().setFill(bank.getGui().getPatternLookRight());
+				bank.getPlayer().setLeft(false);
 			}
 			if (ep.getCode() == KeyCode.UP) {
 				bank.getMove().jump();
