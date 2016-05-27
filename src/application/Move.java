@@ -26,22 +26,22 @@ public class Move {
 
 	public void moveLeft() {
 		bank.getPlayer().setVelLeft(-3);
-		bank.getPlayer().setLeft(true);
+		//bank.getPlayer().setLeft(true);
 	}
 
 	public void moveRight() {
 		bank.getPlayer().setVelRight(+3);
-		bank.getPlayer().setLeft(false);
+		//bank.getPlayer().setLeft(false);
 	}
 
 	public void resetVelLeft() {
 		bank.getPlayer().setVelLeft(0);
-		bank.getPlayer().setLeft(true);
+		//bank.getPlayer().setLeft(true);
 	}
 
 	public void resetVelRight() {
 		bank.getPlayer().setVelRight(0);
-		bank.getPlayer().setLeft(false);
+		//bank.getPlayer().setLeft(false);
 	}
 
 	public void jump() {
