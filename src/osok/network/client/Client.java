@@ -110,7 +110,7 @@ class ClientRead implements Runnable{
                             }
                             bank.getOpponents().setOpponentsList(newPlayers);
                      }catch (Exception e){
-                         System.out.println(e.getMessage());
+                    	 
                      }
 
 
