@@ -81,6 +81,8 @@ class ClientRead implements Runnable{
 
     private Socket socket;
     private volatile boolean running = true;
+    private  ArrayList<String> oldPlayers;
+    private ArrayList<Player> newPlayers;
 
     public ClientRead(Socket socket){
             this.socket = socket;
@@ -91,20 +93,23 @@ class ClientRead implements Runnable{
             System.out.println(socket.isConnected());
             try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
                 Gson gson = new Gson();
-                ArrayList<String> temp = new ArrayList<>();
-                 while(running){
-                     Thread.sleep(3000);
 
+
+                 while(running){
+                     Thread.sleep(1000);
+                            newPlayers.clear();
                    /** reads from server just prints out : SERVER :: Writing to Client **/
 
-                    temp = gson.fromJson( br.readLine() , ArrayList.class);
-                     if(temp == null){
+                    oldPlayers = gson.fromJson( br.readLine() , ArrayList.class);
 
-                     }else{
-                        for (int i = 0; i < temp.size(); i ++){
-                            System.out.println("Player : " + i + " " + temp.get(i));
-                        }
+                     try{
+                            for(int i = 0; i < oldPlayers.size(); i++){
+                                newPlayers.add(gson.fromJson(oldPlayers.get(i), Player.class));
+                            }
+                     }catch (Exception e){
+                         System.out.println(e.getMessage());
                      }
+
 
 
                  }
@@ -136,9 +141,8 @@ class ClientWrite implements Runnable{
         try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
             gson = new Gson();
             while(running){
-                Thread.sleep(1);
-                String s = gson.toJson(player);
-                pw.println(s);
+                Thread.sleep(1000);
+                pw.println(gson.toJson(player));
                 pw.flush();
             }
         }catch (Exception e){

@@ -55,11 +55,12 @@ public class Server {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(csocket.getInputStream()))) {
                 gson = new Gson();
                 while (true) {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                     String object = br.readLine();
                     player = gson.fromJson(object, Player.class);
+                    System.out.println(player.getxPos() + " :: " + player.getyPos() );
                     for (int i = 0; i < clients.size(); i++) {
-                        if (csocket == clients.get(i)) {
+                        if (csocket.getPort() == clients.get(i).getPort()) {
                             players.set(i, player);
                         }
                     }
