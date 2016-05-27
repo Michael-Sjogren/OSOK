@@ -25,9 +25,10 @@ public class Opponents {
 	}
 
 	public void updateOpponents() {
+		int i = 0;
 		try{
 			if(!(bank.getOpponents().getOpponentsList().size()==0)){
-		for (int i = 0; i < bank.getOpponents().getOpponentsList().size(); i++) {
+		for (i = 0; i < bank.getOpponents().getOpponentsList().size(); i++) {
 			if(bank.getOpponents().getOpponentsList().get(i).isLeft()){
 				bank.getOpponents().getOpponentsCircleList().get(i).setFill(imageLookLeft);
 			}else{
@@ -35,28 +36,16 @@ public class Opponents {
 			}
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(bank.getOpponents().getOpponentsList().get(i).getxPos());
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(bank.getOpponents().getOpponentsList().get(i).getyPos());
+			
 				}
+		for(i=i;i<4;i++){
+			bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(-30);
+			bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(-30);
+		}
 			}
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
-		
-
-		// for (int i = 0; i < bank.getOpponents().getOpponentsList().size();
-		// i++) {
-		// bank.getGui().getRoot().getChildren().remove(bank.getOpponents().getOpponentsCircleList().get(i));
-		// }
-		// for (int i = 0; i < bank.getOpponents().getOpponentsList().size();
-		// i++) {
-		// bank.getOpponents().getOpponentsCircleList().get(i)
-		// .setCenterX(bank.getOpponents().getOpponentsList().get(i).getxPos());
-		// bank.getOpponents().getOpponentsCircleList().get(i)
-		// .setCenterY(bank.getOpponents().getOpponentsList().get(i).getyPos());
-		//
-		// bank.getGui().getRoot().getChildren().add(bank.getOpponents().getOpponentsCircleList().get(i));
-		//
-		// }
-		// }
 	}
 
 	public ArrayList<Player> getOpponentsList() {
