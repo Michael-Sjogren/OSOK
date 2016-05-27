@@ -11,7 +11,7 @@ public class Opponents {
 	private ArrayList<Circle> opponentsCircleList = new ArrayList<Circle>();
 
 	public Opponents(Bank bank) {
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 4; i++) {
 			opponentsCircleList.add(new Circle(20));
 		}
 		this.bank = bank;
