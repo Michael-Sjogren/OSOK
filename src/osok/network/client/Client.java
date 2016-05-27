@@ -30,7 +30,7 @@ public class Client extends Player{
         this.player = bank.getPlayer();
 
         try {
-           Socket socket = new Socket( /*player.getIp() */ "localhost",/* player.getPort()*/ 55556);
+           Socket socket = new Socket( bank.getPlayer().getIp() ,bank.getPlayer().getPort());
             if(socket.isClosed()){
                 return;
             }else{
