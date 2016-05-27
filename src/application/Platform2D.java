@@ -40,7 +40,7 @@ public class Platform2D {
         west = new Line(startX, startY, startX, startY + height);
         west.setStrokeWidth(2);
 
-        Image image = new Image("application/Sprite-0007.png");
+        Image image = new Image("Sprite-0007.png");
         iv1 = new ImageView();
         iv1.setImage(image);
         iv1.setX(startX);

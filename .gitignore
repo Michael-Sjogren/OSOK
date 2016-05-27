@@ -7,5 +7,8 @@
 .idea/copyright/profiles_settings.xml
 *.idea/
 bin/*
+out/*
+Thumbs.db
+gson-2.6.2.jar
 
 *.class

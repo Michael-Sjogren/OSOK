@@ -1,9 +1,12 @@
 package application;
 
+import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import osok.network.client.Client;
 
 public class Login extends Application{
@@ -24,15 +28,37 @@ public class Login extends Application{
 	private Stage stage;
     private Client client;
 
+	Image IMAGE = new Image("Sprite-glowing.png");
+
+	private int COLUMNS  =   29;
+	private int COUNT    =  29;
+	private int OFFSET_X =  0;
+	private int OFFSET_Y =  0;
+	private int WIDTH    = 1024;
+	private int HEIGHT   = 720;
+
+
+
     @Override
 	public void start(Stage primaryStage) throws Exception {
 		this.stage=primaryStage;
 		bank = new Bank(this);
 		BorderPane pane = new BorderPane();
-		Image image = new Image("application/Sprite-login.png");
-		ImageView iv1 = new ImageView();
-		iv1.setImage(image);
-		pane.getChildren().add(iv1);
+		ImageView imageView = new ImageView(IMAGE);
+		imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
+
+		Animation animation = new SpriteAnimation(
+				imageView,
+				Duration.millis(2000),
+				COUNT, COLUMNS,
+				OFFSET_X, OFFSET_Y,
+				WIDTH, HEIGHT
+		);
+		animation.setCycleCount(Animation.INDEFINITE);
+		animation.play();
+		Group group = new Group(imageView);
+
+		pane.getChildren().add(group);
 		pane.setCenter(addGridPane());
 		Scene scene = new Scene(pane, 1014, 710);
 

@@ -44,10 +44,10 @@ public class ClientGui {
 
     public Parent createContent(Player player) {
         root = new BorderPane();
-        Image image = new Image("application/Sprite-bakgrund.png");
+        Image image = new Image("Sprite-bakgrund.png");
         ImageView iv1 = new ImageView();
-        imageLookRight = new Image("application/Sprite-0009.png");
-        imageLookLeft = new Image("application/Sprite-00010.png");
+        imageLookRight = new Image("Sprite-0009.png");
+        imageLookLeft = new Image("Sprite-00010.png");
         patternLookRight = new ImagePattern(imageLookRight);
         patternLookLeft = new ImagePattern(imageLookLeft);
         playerCircle = new Circle(bank.getPlayer().getxPos(), bank.getPlayer().getyPos(), bank.getPlayer().getSize());

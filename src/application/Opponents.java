@@ -15,8 +15,8 @@ public class Opponents {
 	ImagePattern imageLookRight;
 
 	public Opponents(Bank bank) {
-		imageLookLeft = new ImagePattern(new Image("application/Sprite-00010.png"));
-		imageLookRight = new ImagePattern(new Image("application/Sprite-0009.png"));
+		imageLookLeft = new ImagePattern(new Image("Sprite-00010.png"));
+		imageLookRight = new ImagePattern(new Image("Sprite-0009.png"));
 		
 		for (int i = 0; i < 4; i++) {
 			opponentsCircleList.add(new Circle(-30,-30,20));
