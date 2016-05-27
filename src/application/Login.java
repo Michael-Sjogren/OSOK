@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import osok.network.client.Client;
@@ -27,7 +29,7 @@ public class Login extends Application{
 		this.stage=primaryStage;
 		bank = new Bank(this);
 		BorderPane pane = new BorderPane();
-		Image image = new Image("application/Sprite-0003.png");
+		Image image = new Image("application/Sprite-login.png");
 		ImageView iv1 = new ImageView();
 		iv1.setImage(image);
 		pane.getChildren().add(iv1);
@@ -47,27 +49,34 @@ public class Login extends Application{
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 
-		Text scenetitle = new Text("Välkommen till OSOK!");
-		grid.add(scenetitle, 0, 0, 2, 1);
-
-		Label user = new Label("Username");
+		Label user = new Label("Username:");
+		user.setFont(new Font("Arial", 30));
+		user.setTextFill(Color.WHITE);
 		grid.add(user, 0, 1);
 
 		TextField userName = new TextField();
+		userName.setStyle("-fx-background-color: black; -fx-text-inner-color: white;");
 		userName.setText("localhost");
 		grid.add(userName, 1, 1);
 
 		Label ipAdress = new Label("IP-Adress:");
+		ipAdress.setFont(new Font("Arial", 30));
+		ipAdress.setTextFill(Color.WHITE);
 		grid.add(ipAdress, 0, 2);
 
 		TextField ip = new TextField();
+		ip.setStyle("-fx-background-color: black; -fx-text-inner-color: white;");
+
 		ip.setText("localhost");
 		grid.add(ip, 1, 2);
 
 		Label portNummer = new Label("Port-Nummer:");
+		portNummer.setFont(new Font("Arial", 30));
+		portNummer.setTextFill(Color.WHITE);
 		grid.add(portNummer, 0, 3);
 
 		TextField port = new TextField();
+		port.setStyle("-fx-background-color: black; -fx-text-inner-color: white;");
 		port.setText("55556");
 		grid.add(port, 1, 3);
 

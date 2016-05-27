@@ -44,7 +44,7 @@ public class ClientGui {
 
     public Parent createContent(Player player) {
         root = new BorderPane();
-        Image image = new Image("application/Sprite-0002.png");
+        Image image = new Image("application/Sprite-bakgrund.png");
         ImageView iv1 = new ImageView();
         imageLookRight = new Image("application/Sprite-0009.png");
         imageLookLeft = new Image("application/Sprite-00010.png");
