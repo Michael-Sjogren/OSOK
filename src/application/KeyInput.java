@@ -10,12 +10,14 @@ public class KeyInput {
 		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
 			if (ep.getCode() == KeyCode.LEFT) {
 				bank.getMove().moveLeft();
+				bank.getGui().getPlayerCircle().setFill(bank.getGui().getPatternLookLeft());
 			}
 			if (ep.getCode() == KeyCode.SPACE) {
 				Bullet bullet = new Bullet(bank.getPlayer(),bank);
 			}
 			if (ep.getCode() == KeyCode.RIGHT) {
 				bank.getMove().moveRight();
+				bank.getGui().getPlayerCircle().setFill(bank.getGui().getPatternLookRight());
 			}
 			if (ep.getCode() == KeyCode.UP) {
 				bank.getMove().jump();
