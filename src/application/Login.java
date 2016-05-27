@@ -54,39 +54,42 @@ public class Login extends Application{
 		grid.add(user, 0, 1);
 
 		TextField userName = new TextField();
+		userName.setText("localhost");
 		grid.add(userName, 1, 1);
 
 		Label ipAdress = new Label("IP-Adress:");
 		grid.add(ipAdress, 0, 2);
 
 		TextField ip = new TextField();
+		ip.setText("localhost");
 		grid.add(ip, 1, 2);
 
 		Label portNummer = new Label("Port-Nummer:");
 		grid.add(portNummer, 0, 3);
 
 		TextField port = new TextField();
+		port.setText("55556");
 		grid.add(port, 1, 3);
 
 		Button btn = new Button("Logga in!");
 		btn.setOnAction(e-> {
-          /*  if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals(""))){ */
+          if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals(""))){
 
                 Player player =	bank.getPlayer();
-            //    player.setIp(ip.getText());
-           //     player.setPort(Integer.parseInt(port.getText()));
-            //    player.setUsername(userName.getText());
+              player.setIp(ip.getText());
+               player.setPort(Integer.parseInt(port.getText()));
+               player.setUsername(userName.getText());
 
-            //    System.out.println(player.getUsername());
-           //     System.out.println(player.getIp());
-           //     System.out.println(player.getPort());
+               System.out.println(player.getUsername());
+              System.out.println(player.getIp());
+			  System.out.println(player.getPort());
 
                 client = new Client(bank);
                 if(player.isConnected()){
 
                     bank.getLogin().getStage().setScene(bank.getGui().getScene());
                 }
-         //   }
+           }
 		});
 
 		HBox hbBtn = new HBox(10);

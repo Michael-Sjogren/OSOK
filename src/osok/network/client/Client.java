@@ -6,6 +6,7 @@ import application.Player;
 import com.google.gson.Gson;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by Michael Sjögren on 2016-05-20.
@@ -89,12 +90,23 @@ class ClientRead implements Runnable{
     public void run(){
             System.out.println(socket.isConnected());
             try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
+                Gson gson = new Gson();
+                ArrayList<String> temp = new ArrayList<>();
                  while(running){
                      Thread.sleep(3000);
 
                    /** reads from server just prints out : SERVER :: Writing to Client **/
-                //     System.out.println(br.readLine());
+
+                    temp = gson.fromJson( br.readLine() , ArrayList.class);
+                     if(temp == null){
+
+                     }else{
+                        for (int i = 0; i < temp.size(); i ++){
+                            System.out.println("Player : " + i + " " + temp.get(i));
+                        }
+                     }
+
+
                  }
             }catch (Exception e){
             e.printStackTrace();
