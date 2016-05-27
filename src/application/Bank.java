@@ -6,6 +6,7 @@ import java.util.List;
 public class Bank {
 
 	Player player;
+	Opponents opponents;
 	Move move;
 	KeyInput keyInput;
 	Gravity gravity;
@@ -20,6 +21,7 @@ public class Bank {
 	public Bank(Login login) {
 		this.login = login;
 		player = new Player();
+		opponents = new Opponents(this);
 		move = new Move(this);
 		keyInput = new KeyInput(this);
 		gravity = new Gravity(this);
