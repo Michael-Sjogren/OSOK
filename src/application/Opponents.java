@@ -2,6 +2,8 @@ package application;
 
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class Opponents {
@@ -9,10 +11,15 @@ public class Opponents {
 	Bank bank;
 	private ArrayList<Player> opponentsList = new ArrayList<Player>();
 	private ArrayList<Circle> opponentsCircleList = new ArrayList<Circle>();
+	ImagePattern imageLookLeft;
+	ImagePattern imageLookRight;
 
 	public Opponents(Bank bank) {
+		imageLookLeft = new ImagePattern(new Image("application/Sprite-00010.png"));
+		imageLookRight = new ImagePattern(new Image("application/Sprite-0009.png"));
+		
 		for (int i = 0; i < 4; i++) {
-			opponentsCircleList.add(new Circle(20));
+			opponentsCircleList.add(new Circle(-30,-30,20));
 		}
 		this.bank = bank;
 	}
@@ -21,6 +28,11 @@ public class Opponents {
 		try{
 			if(!(bank.getOpponents().getOpponentsList().size()==0)){
 		for (int i = 0; i < bank.getOpponents().getOpponentsList().size(); i++) {
+			if(bank.getOpponents().getOpponentsList().get(i).isLeft()){
+				bank.getOpponents().getOpponentsCircleList().get(i).setFill(imageLookLeft);
+			}else{
+				bank.getOpponents().getOpponentsCircleList().get(i).setFill(imageLookRight);
+			}
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(bank.getOpponents().getOpponentsList().get(i).getxPos());
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(bank.getOpponents().getOpponentsList().get(i).getyPos());
 				}
