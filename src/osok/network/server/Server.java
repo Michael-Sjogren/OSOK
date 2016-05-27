@@ -23,6 +23,7 @@ public class Server {
             System.out.println("isServerSocket closed : " + ssock.isClosed());
 
             while (true) {
+
                 if (clients.size() < 5) {
                     csocket = ssock.accept();
                     new Thread(new ServerRead(csocket)).start();
@@ -65,7 +66,7 @@ public class Server {
                     }
                 }
             } catch (IOException e) {
-                System.out.println(e);
+                closeSocket(csocket);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -93,9 +94,11 @@ public class Server {
                     pw.flush();
                 }
             } catch (IOException e) {
-                System.out.println(e);
+                System.out.println(e.getMessage());
+
             } catch (Exception e) {
                 e.printStackTrace();
+                closeSocket(csocket);
             }
         }
 
@@ -112,6 +115,24 @@ public class Server {
             }
          //   System.out.println(gson.toJson(tempArray));
             return gson.toJson(tempArray);
+        }
+    }
+
+    public static void closeSocket(Socket csocket){
+        for (int i = 0; i < clients.size(); i++){
+            System.out.println("checking connectons");
+            if (clients.get(i).isClosed() == true){
+
+                System.out.println(clients.get(i).getLocalAddress());
+                try {
+                    csocket.close();
+                    clients.remove(i);
+                    players.remove(i);
+                    System.out.println("connection closed");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
         }
     }
 }
