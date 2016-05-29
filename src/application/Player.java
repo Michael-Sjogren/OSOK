@@ -5,10 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Player implements Serializable{
-	// transient keyword makes field un serializiable
+
 	private transient LinkedList<Bullet> bulletList = new LinkedList<Bullet>();
-	private  boolean connected;
+	private boolean connected;
 	private String username;
+	private transient String message;
 	private int port;
 	private String ip;
 	private final double size = 20.0;
@@ -16,8 +17,9 @@ public class Player implements Serializable{
 	private double velLeft = 0, velRight = 0;
 	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
 	private boolean isLeft = true;
+    private transient String newMessage;
 
-	public Player() {
+    public Player() {
 	}
 
 	public double getSize() {
@@ -151,4 +153,13 @@ public class Player implements Serializable{
 	public void setBulletList(LinkedList<Bullet> bulletList) {
 		this.bulletList = bulletList;
 	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
 }

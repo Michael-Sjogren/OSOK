@@ -4,13 +4,12 @@ import java.util.Arrays;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import osok.network.client.Client;
@@ -27,6 +26,13 @@ public class ClientGui {
     private Image imageLookLeft;
     private ImagePattern patternLookRight;
     private ImagePattern patternLookLeft;
+    private String message;
+    private Pane chatUI ;
+    private TextArea chatLog;
+    private TextField messageInput;
+    private Button sendMessage;
+    private FlowPane msgInputBox;
+    private VBox chatLogBox;
 
     public ClientGui(Bank bank) {
         this.bank = bank;
@@ -54,6 +60,7 @@ public class ClientGui {
         playerCircle.setFill(patternLookLeft);
         iv1.setImage(image);
         root.getChildren().addAll(iv1, playerCircle);
+
         for (int i = 0; i < bank.getPlatforms().size(); i++) {
             for (int j = 0; j < bank.getPlatforms().get(i).getPlatform().size(); j++) {
                 root.getChildren().add(bank.getPlatforms().get(i).getPlatform().get(j));
@@ -64,6 +71,7 @@ public class ClientGui {
         for (int i = 0; i < 4; i++) {
 			root.getChildren().add(bank.getOpponents().getOpponentsCircleList().get(i));
 		}
+        root.setBottom(createChatGUI());
         return root;
     }
 
@@ -97,4 +105,36 @@ public class ClientGui {
     public ImagePattern getPatternLookRight(){
         return patternLookRight;
     }
+    
+    public Pane createChatGUI(){
+        chatUI = new Pane();
+        chatUI.setMaxSize(300 , 200);
+        chatLog = new TextArea();
+        messageInput = new TextField();
+        messageInput.setMaxWidth(250);
+        sendMessage = new Button("send");
+        msgInputBox = new FlowPane(getMessageInput(), sendMessage);
+
+        chatLogBox = new VBox(getChatLog());
+        chatLog.setEditable(false);
+        chatLog.setFocusTraversable(false);
+        messageInput.setFocusTraversable(false);
+        chatUI.getChildren().addAll( chatLogBox , messageInput);
+
+        chatLog.getStyleClass().add("chat-log");
+        messageInput.getStyleClass().add("message-input");
+        chatUI.getStyleClass().add("chatUI");
+
+        return chatUI;
+    }
+
+    public TextArea getChatLog() {
+        return chatLog;
+    }
+
+
+    public TextField getMessageInput() {
+        return messageInput;
+    }
+
 }

@@ -23,12 +23,12 @@ public class Bank {
 		player = new Player();
 		opponents = new Opponents(this);
 		move = new Move(this);
-		keyInput = new KeyInput(this);
 		gravity = new Gravity(this);
 		collision = new Collision(this);
 		game = new Game(this);
 		thread = new Thread(game);
 		gui = new ClientGui(this);
+		keyInput = new KeyInput(this);
 		thread.start();
 		
 	}

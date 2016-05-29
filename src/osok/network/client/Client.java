@@ -11,9 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Michael Sjögren on 2016-05-20.
  */
-public class Client extends Player{
-    private int port;
-    private String ip;
+public class Client{
     private ClientRead read;
     private ClientWrite write;
     private Thread writingThread;
@@ -26,8 +24,10 @@ public class Client extends Player{
 
     /* konstruktor */
     public Client(Bank bank){
-     super();
+        super();
+        this.bank = bank;
         this.player = bank.getPlayer();
+        username = bank.getPlayer().getUsername();
 
         try {
            Socket socket = new Socket( bank.getPlayer().getIp() ,bank.getPlayer().getPort());
@@ -36,16 +36,13 @@ public class Client extends Player{
             }else{
                 player.setIsConnected(true);
             }
-
            this.socket = socket;
         } catch (IOException e) {
-
             e.printStackTrace();
         }
 
         System.out.println(" -- Client connected -- ");
-
-                    /* start write thread for client */
+        /* start write thread for client */
         write = new ClientWrite(socket , bank );
         writingThread = new Thread(write , " client-write-thread ");
         writingThread.start();
@@ -58,104 +55,111 @@ public class Client extends Player{
 
     /** terminates threads **/
     public void shutdown()  {
-        read.isRunning(false);
-        write.isRunning(false);
-        try {
-            if(readingThread != null && writingThread != null){
-                readingThread.join();
-                writingThread.join();
-                socket.close();
-                System.out.println("-- client all threads terminated --");
-            }
+            read.isRunning(false);
+            write.isRunning(false);
+            try {
+                if(readingThread != null && writingThread != null){
+                    readingThread.join();
+                    writingThread.join();
+                    socket.close();
+                    System.out.println("-- client all threads terminated --");
+                }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }
 
-/** reads from server **/
-class ClientRead implements Runnable{
+    /** reads from server **/
+    class ClientRead implements Runnable{
 
-    private Socket socket;
-    private Bank bank;
-    private volatile boolean running = true;
-    private  ArrayList<String> oldPlayers;
-    private ArrayList<Player> newPlayers = new ArrayList<Player>();
+            private Socket socket;
+            private Bank bank;
+            private volatile boolean running = true;
+            private  ArrayList<String> oldPlayers;
+            private ArrayList<Player> newPlayers = new ArrayList<Player>();
 
-    public ClientRead(Socket socket, Bank bank){
-            this.socket = socket;
-            this.bank=bank;
+        public ClientRead(Socket socket, Bank bank){
+                this.socket = socket;
+                this.bank=bank;
+                }
+
+        @Override
+        public void run(){
+                    System.out.println(socket.isConnected());
+                     String condition = bank.getPlayer().getUsername() + " : " + "null";
+
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+                        Gson gson = new Gson();
+                        String oldMessage ="";
+                        String newMessage = "";
+
+                         while(running){
+                             Thread.sleep(1);
+                             newPlayers.clear();
+                             oldPlayers = gson.fromJson( br.readLine() , ArrayList.class);
+                             newMessage = br.readLine();
+
+                                 if(!newMessage.equals(condition) && !newMessage.equals(oldMessage)){
+                                     bank.getGui().getChatLog().appendText("\n"+newMessage);
+                                     oldMessage = newMessage;
+                                 }
+
+
+                             try{
+                                 for(int i = 0; i < oldPlayers.size(); i++){
+                                     newPlayers.add(gson.fromJson(oldPlayers.get(i), Player.class));
+                                    }
+                                    bank.getOpponents().setOpponentsList(newPlayers);
+                             }catch (Exception e){
+                                e.printStackTrace();
+                             }
+                         }
+                    }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+                    public void isRunning(boolean running) {
+                    this.running = running;
+                    }
+     }
+
+    /** writes to server **/
+    class ClientWrite implements Runnable{
+
+                private Socket socket;
+                private Bank bank;
+                private volatile boolean running = true;
+                private Gson gson;
+
+            public ClientWrite(Socket socket , Bank bank){
+                this.socket = socket;
+               this.bank=bank;
             }
 
-    @Override
-    public void run(){
-            System.out.println(socket.isConnected());
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-                Gson gson = new Gson();
-
-
-                 while(running){
-                     Thread.sleep(1);
-                            newPlayers.clear();
-                   /** reads from server just prints out : SERVER :: Writing to Client **/
-
-                    oldPlayers = gson.fromJson( br.readLine() , ArrayList.class);
-
-                     try{
-                            for(int i = 0; i < oldPlayers.size(); i++){
-                                newPlayers.add(gson.fromJson(oldPlayers.get(i), Player.class));
-                            }
-                            bank.getOpponents().setOpponentsList(newPlayers);
-                     }catch (Exception e){
-                    	 
-                     }
-
-
-
-                 }
-            }catch (Exception e){
-            e.printStackTrace();
+            @Override
+            public void run(){
+                try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
+                    gson = new Gson();
+                    String message = "";
+                    while(running){
+                        Thread.sleep(17);
+                        pw.println(gson.toJson(bank.getPlayer()));
+                        pw.flush();
+                        pw.println(bank.getPlayer().getUsername() + " : " + bank.getPlayer().getMessage());
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
-    }
 
             public void isRunning(boolean running) {
-            this.running = running;
+                this.running = running;
             }
- }
-    /** writes to server **/
-class ClientWrite implements Runnable{
-
-        private Socket socket;
-        private Bank bank;
-        private volatile boolean running = true;
-        private Gson gson;
-
-    public ClientWrite(Socket socket , Bank bank){
-        this.socket = socket;
-       this.bank=bank;
     }
 
-    @Override
-    public void run(){
 
-        try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
-            gson = new Gson();
-            while(running){
-                Thread.sleep(1);
-                pw.println(gson.toJson(bank.getPlayer()));
-              //  pw.println(bank.getPlayer().getxPos());
-               // pw.println(bank.getPlayer().getyPos());
-                pw.flush();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
-    public void isRunning(boolean running) {
-        this.running = running;
-    }
-}

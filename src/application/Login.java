@@ -108,16 +108,26 @@ public class Login extends Application{
 
 		Button btn = new Button("Logga in!");
 		btn.setOnAction(e-> {
-          if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals(""))){
+          if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals("") )){
 
-                Player player =	bank.getPlayer();
+			  Player player =	bank.getPlayer();
+			  player.setUsername(userName.getText());
               player.setIp(ip.getText());
                player.setPort(Integer.parseInt(port.getText()));
-               player.setUsername(userName.getText());
+			  for (int i = 0; i <  bank.opponents.getOpponentsList().size(); i++){
+				  if(userName.getText().equals(bank.opponents.getOpponentsList().get(i).getUsername())){
+					  System.out.println(bank.opponents.getOpponentsList().get(i).getUsername());
+					  System.out.println("username not unique!");
+					  userName.setText("");
+				  }else{
+					  player.setUsername(userName.getText());
+				  }
+			  }
 
-               System.out.println(player.getUsername());
-              System.out.println(player.getIp());
-			  System.out.println(player.getPort());
+
+               System.out.println("USERNAME :: " +player.getUsername());
+              System.out.println("IP :: " +player.getIp());
+			  System.out.println("PORT :: " +player.getPort());
 
                 client = new Client(bank);
                 if(player.isConnected()){

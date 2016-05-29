@@ -1,10 +1,11 @@
 package application;
 
+import javafx.event.ActionEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class KeyInput {
-
+	private String message;
 	public KeyInput(Bank bank) {
 
 		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
@@ -50,6 +51,19 @@ public class KeyInput {
 				
 			});
 		});
+
+
+		bank.getGui().getMessageInput().addEventHandler(ActionEvent.ANY , e -> {
+			 message = bank.getGui().getMessageInput().getText();
+			if(!message.equals("")){
+				bank.getPlayer().setMessage(message);
+				System.out.println(message);
+			}
+		});
+
+
+
+
 
 	}
 
