@@ -61,7 +61,7 @@ public class Login extends Application{
 		pane.getChildren().add(group);
 		pane.setCenter(addGridPane());
 		Scene scene = new Scene(pane, 1014, 710);
-
+		scene.getStylesheets().add("/application/style.css");
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();

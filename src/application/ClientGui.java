@@ -43,7 +43,9 @@ public class ClientGui {
         Platform2D p2D3 = new Platform2D(618, 150);
         Platform2D p2D4 = new Platform2D(618, 500);
         bank.getPlatforms().addAll(Arrays.asList(p2D0, p2D1, p2D2, p2D3, p2D4));
+
         scene = new Scene(createContent(bank.getPlayer()), 1024, 720);
+        scene.getStylesheets().add("/application/style.css");
 
 
     }
@@ -107,25 +109,27 @@ public class ClientGui {
     }
     
     public Pane createChatGUI(){
-        chatUI = new Pane();
-        chatUI.setMaxSize(300 , 200);
+
+
         chatLog = new TextArea();
         messageInput = new TextField();
-        messageInput.setMaxWidth(250);
         sendMessage = new Button("send");
-        msgInputBox = new FlowPane(getMessageInput(), sendMessage);
 
         chatLogBox = new VBox(getChatLog());
         chatLog.setEditable(false);
         chatLog.setFocusTraversable(false);
         messageInput.setFocusTraversable(false);
-        chatUI.getChildren().addAll( chatLogBox , messageInput);
+
 
         chatLog.getStyleClass().add("chat-log");
+        chatLog.setWrapText(true);
         messageInput.getStyleClass().add("message-input");
+
+        chatUI = new BorderPane(null , null , null , messageInput , chatLog);
         chatUI.getStyleClass().add("chatUI");
 
         return chatUI;
+
     }
 
     public TextArea getChatLog() {

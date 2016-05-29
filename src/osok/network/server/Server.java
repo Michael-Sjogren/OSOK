@@ -70,8 +70,9 @@ public class Server {
                     object = br.readLine();
                     newMessage = br.readLine();
                     player = gson.fromJson(object, Player.class);
+                    String condition = player.getUsername() + " : " + "null";
 
-                    if(!newMessage.equals(oldMessage)){
+                    if(!newMessage.equals(condition) && !newMessage.equals(oldMessage)){
                         System.out.println("from server read "+newMessage);
                         handler.setMessage(newMessage);
                         oldMessage = newMessage;

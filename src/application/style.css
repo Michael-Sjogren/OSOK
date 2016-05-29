@@ -1,0 +1,59 @@
+
+
+
+
+.message-input {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-border-color: rgba(0, 0,0 0.6);
+    -fx-max-width: 250px;
+    -fx-text-fill: aliceblue;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+.chat-log {
+    -fx-background-color: rgba(59, 64, 68, 0.4);
+    -fx-font-style: normal;
+    -fx-font-size: 1.5em;
+    -fx-text-fill : rgba(226, 241, 255, 1);
+    -fx-max-width: 250px;
+    -fx-spacing: 100px;
+    -fx-border-color: rgba(0,0,0,0.6);
+}
+
+.chat-log .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.chat-log .scroll-bar:horizontal {
+    -fx-opacity: 0.8;
+    -fx-background-color: rgba(0, 0, 0, 0.95);
+    -fx-fill: rgba(95, 95, 95, 0.95);
+}
+
+.chat-log .scroll-bar:horizontal .thumb {
+    -fx-background-color:rgba(255,255,255,0.5);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+}
+
+.chat-log .scroll-bar:vertical {
+    -fx-opacity: 0.8;
+    -fx-background-color: rgba(0, 0, 0, 0.95);
+    -fx-fill: rgba(95, 95, 95, 0.95);
+}
+
+.chat-log .scroll-bar:vertical .thumb {
+    -fx-background-color:rgba(255,255,255,0.5);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+}
+
+.chat-log .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.chat-log .scroll-pane .content{
+    -fx-background-color: transparent;
+}

@@ -1,11 +1,16 @@
 package application;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 
 public class KeyInput {
 	private String message;
+    private boolean isShowing = false;
+
 	public KeyInput(Bank bank) {
 
 		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
@@ -54,12 +59,36 @@ public class KeyInput {
 
 
 		bank.getGui().getMessageInput().addEventHandler(ActionEvent.ANY , e -> {
+
 			 message = bank.getGui().getMessageInput().getText();
 			if(!message.equals("")){
 				bank.getPlayer().setMessage(message);
-				System.out.println(message);
+                bank.getGui().getMessageInput().clear();
+                bank.getGui().getChatLog().setFocusTraversable(false);
+                bank.getGui().getMessageInput().setFocusTraversable(false);
+                isShowing = false;
 			}
 		});
+
+        bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_RELEASED , event -> {
+            if(event.getCode() == KeyCode.ENTER){
+                if(isShowing){
+                    bank.getGui().getMessageInput().setStyle("visibility: hidden");
+                    bank.getGui().getChatLog().setStyle("-fx-background-color: rgba(59, 64, 68, 0.2);");
+                    bank.getGui().getChatLog().lookup(".scroll-bar:vertical").setStyle("-fx-opacity: 0");
+                    isShowing = false;
+                }else{
+                    bank.getGui().getMessageInput().setFocusTraversable(true);
+                    bank.getGui().getMessageInput().setStyle("visibility: visible");
+                    bank.getGui().getChatLog().setStyle("-fx-background-color: rgba(59, 64, 68, 0.4);");
+                    bank.getGui().getChatLog().lookup(".scroll-bar:vertical").setStyle("-fx-opacity: 1");
+                    isShowing = true;
+                }
+
+            }
+        });
+
+
 
 
 
