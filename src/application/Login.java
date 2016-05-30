@@ -21,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import osok.network.client.ChatClient;
 import osok.network.client.Client;
 
 public class Login extends Application{
@@ -36,6 +37,7 @@ public class Login extends Application{
 	private int OFFSET_Y =  0;
 	private int WIDTH    = 1024;
 	private int HEIGHT   = 720;
+	private ChatClient chatClient;
 
 
 
@@ -128,11 +130,13 @@ public class Login extends Application{
                System.out.println("USERNAME :: " +player.getUsername());
               System.out.println("IP :: " +player.getIp());
 			  System.out.println("PORT :: " +player.getPort());
+			  chatClient = new ChatClient(bank.getPlayer().getIp() , bank);
+			  client = new Client(bank , chatClient);
 
-                client = new Client(bank);
+
                 if(player.isConnected()){
-
                     bank.getLogin().getStage().setScene(bank.getGui().getScene());
+					chatClient.startChatClient();
                 }
            }
 		});

@@ -18,17 +18,17 @@ public class Client{
     private Thread writingThread;
     private Thread readingThread;
     private Socket socket;
-    private String username;
+    private ChatClient chatClient;
     private Bank bank;
     private Player player;
 
 
     /* konstruktor */
-    public Client(Bank bank){
-        super();
+    public Client(Bank bank, ChatClient chatClient){
+
+
         this.bank = bank;
         this.player = bank.getPlayer();
-        username = bank.getPlayer().getUsername();
 
         try {
            Socket socket = new Socket( bank.getPlayer().getIp() ,bank.getPlayer().getPort());
@@ -37,7 +37,6 @@ public class Client{
                 return;
             }else{
                 player.setIsConnected(true);
-                new ChatClient(55555 , bank.getPlayer().getIp() , bank);
             }
            this.socket = socket;
         } catch (IOException e) {
@@ -65,6 +64,7 @@ public class Client{
                 if(readingThread != null && writingThread != null){
                     readingThread.join();
                     writingThread.join();
+                    chatClient.stopChat();
                     socket.close();
                     System.out.println("-- client all threads terminated --");
                 }

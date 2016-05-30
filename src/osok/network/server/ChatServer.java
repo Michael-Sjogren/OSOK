@@ -40,7 +40,7 @@ public class ChatServer extends Thread{
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -106,7 +106,7 @@ class ServerChatRead implements Runnable {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

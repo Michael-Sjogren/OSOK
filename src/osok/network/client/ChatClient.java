@@ -17,21 +17,28 @@ import java.util.Scanner;
 public class ChatClient {
 
     private String ip;
+    private Bank bank;
     private int port;
-    private boolean running;
     private ChatRead read;
     private ChatWrite write;
-    private Thread chatThreadRead , chatThreadWrite;
+    private Thread chatThreadRead;
+    private Thread chatThreadWrite;
     private Socket socket;
+    private Client client;
 
-    public ChatClient(int port ,String ip , Bank bank){
-        this.port = port;
+
+
+
+    public ChatClient(String ip, Bank bank){
         this.ip = ip;
+        this.bank = bank;
 
-        System.out.println("chat client called");
+    }
+
+
+    public void startChatClient(){
         try  {
-            Socket socket = new Socket(ip , port);
-            this.socket = socket;
+            socket = new Socket(ip ,55555);
             System.out.println("is chat client socket closed? :: "+socket.isClosed() + " ip : " + ip + "port : " + port);
             read = new ChatRead(socket , bank);
             write = new ChatWrite(socket , bank);
@@ -46,6 +53,28 @@ public class ChatClient {
         }
     }
 
+    public Thread getChatThreadWrite() {
+        return chatThreadWrite;
+    }
+
+    public Thread getChatThreadRead() {
+        return chatThreadRead;
+    }
+
+    /** terminates chat client threads and jumps out of loop when closing window **/
+    public void stopChat(){
+
+        read.readSetIsRunning(false);
+        write.writeSetIsRunning(false);
+
+        try {
+            chatThreadRead.join();
+            chatThreadWrite.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
 
@@ -53,7 +82,7 @@ class ChatWrite implements Runnable {
 
     private Socket socket;
     private Bank bank;
-    private boolean running = true;
+    private boolean isRunning = true;
 
     ChatWrite(Socket socket, Bank bank){
         this.socket = socket;
@@ -67,7 +96,7 @@ class ChatWrite implements Runnable {
             String newMessage;
             String oldMessage = "";
 
-            while(running){
+            while(isRunning){
                 Thread.sleep(200);
                 newMessage = bank.getPlayer().getMessage();
                 pw.println(bank.getPlayer().getUsername() + " : " + newMessage);
@@ -81,6 +110,10 @@ class ChatWrite implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public void writeSetIsRunning(boolean isRunning){
+        this.isRunning = isRunning;
+    }
 }
 
 class ChatRead implements Runnable{
@@ -89,28 +122,32 @@ class ChatRead implements Runnable{
 
     private Bank bank;
     private Socket socket;
-    private boolean running = true;
     private String newMessage;
     private String oldMessage = "";
+    private boolean isRunning = true;
 
     ChatRead(Socket socket, Bank bank){
         this.socket = socket;
         this.bank = bank;
     }
 
-
-
     @Override
     public void run() {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
             System.out.println("client chat read running");
-
+            boolean firstMessage = true;
 
             String condition = bank.getPlayer().getUsername() + " : " + "null";
-            while(running){
+            while(isRunning){
                 newMessage = br.readLine();
                 if(!newMessage.equals(condition) && !newMessage.equals(oldMessage)){
-                    bank.getGui().getChatLog().appendText("\n"+newMessage);
+                    if(!firstMessage){
+                        bank.getGui().getChatLog().appendText("\n"+newMessage);
+                    }else {
+                        bank.getGui().getChatLog().appendText(newMessage);
+                        firstMessage = false;
+                    }
+
                     oldMessage = newMessage;
                 }
             }
@@ -119,5 +156,9 @@ class ChatRead implements Runnable{
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void readSetIsRunning(boolean isRunning) {
+        this.isRunning = isRunning;
     }
 }
