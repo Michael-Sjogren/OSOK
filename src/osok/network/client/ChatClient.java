@@ -63,13 +63,14 @@ public class ChatClient {
 
     /** terminates chat client threads and jumps out of loop when closing window **/
     public void stopChat(){
-
+        System.out.println(" -- STOPCHAT CALLED -- ");
         read.readSetIsRunning(false);
         write.writeSetIsRunning(false);
 
         try {
             chatThreadRead.join();
             chatThreadWrite.join();
+            System.out.println("threads terminated CHAT");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

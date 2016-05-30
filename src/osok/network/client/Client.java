@@ -61,13 +61,11 @@ public class Client{
             read.isRunning(false);
             write.isRunning(false);
             try {
-                if(readingThread != null && writingThread != null){
+
                     readingThread.join();
                     writingThread.join();
-                    chatClient.stopChat();
                     socket.close();
                     System.out.println("-- client all threads terminated --");
-                }
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
