@@ -2,6 +2,7 @@ package osok.network.client;
 
 
 import application.Bank;
+import application.Bullet;
 import application.Player;
 import com.google.gson.Gson;
 import java.io.*;
@@ -84,6 +85,8 @@ public class Client{
             private volatile boolean running = true;
             private  ArrayList<String> oldPlayers;
             private ArrayList<Player> newPlayers = new ArrayList<Player>();
+            private ArrayList<String> oldBullets;
+            private ArrayList<Bullet> newBullets = new ArrayList<Bullet>();
 
         public ClientRead(Socket socket, Bank bank){
                 this.socket = socket;
@@ -102,12 +105,18 @@ public class Client{
                              Thread.sleep(1);
                              newPlayers.clear();
                              oldPlayers = gson.fromJson( br.readLine() , ArrayList.class);
+                             newBullets.clear();
+                             oldBullets = gson.fromJson( br.readLine() , ArrayList.class);
 
                              try{
                                  for(int i = 0; i < oldPlayers.size(); i++){
                                      newPlayers.add(gson.fromJson(oldPlayers.get(i), Player.class));
                                     }
+                                 for(int i = 0; i < oldBullets.size(); i++){
+                                     newBullets.add(gson.fromJson(oldBullets.get(i), Bullet.class));
+                                 }
                                     bank.getOpponents().setOpponentsList(newPlayers);
+                                    bank.getOpponents().setBulletList(newBullets);
                              }catch (Exception e){
                                 e.printStackTrace();
                              }
@@ -141,6 +150,8 @@ public class Client{
                     while(running){
                         Thread.sleep(1);
                         pw.println(gson.toJson(bank.getPlayer()));
+                        pw.flush();
+                        pw.println(gson.toJson(bank.getBullet()));
                         pw.flush();
                     }
                 }catch (Exception e){

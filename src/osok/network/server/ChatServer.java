@@ -26,8 +26,7 @@ public class ChatServer extends Thread{
 
     public void run(){
         System.out.println("chat server listening");
-        try {
-            ServerSocket chatServerSocket = new ServerSocket(55555);
+        try (ServerSocket chatServerSocket = new ServerSocket(55555)){
             handler = new ServerMessageHandler();
             while(running){
                 Socket socket = chatServerSocket.accept();
