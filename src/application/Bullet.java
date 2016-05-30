@@ -3,7 +3,7 @@ package application;
 public class Bullet {
 
 	private transient Bank bank;
-	private double idleCordsX = -30, idleCordsY = -30;
+	private double idleCordsX = -60, idleCordsY = -60;
 	private double currentCordsX = 0, currentCordsY = 0;
 	private final double size = 3;
 	private final double velX = 15.0;

@@ -78,6 +78,7 @@ public class ClientGui {
         }
         for (int i = 0; i < 4; i++) {
 			root.getChildren().addAll(bank.getOpponents().getOpponentsCircleList().get(i));
+			root.getChildren().addAll(bank.getOpponents().getOpponentsBulletList().get(i));
 			
 		}
         root.setBottom(createChatGUI());

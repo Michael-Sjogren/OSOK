@@ -10,7 +10,9 @@ public class Opponents {
 
 	Bank bank;
 	private ArrayList<Player> opponentsList = new ArrayList<Player>();
+	private ArrayList<Bullet> bulletsList = new ArrayList<Bullet>();
 	private ArrayList<Circle> opponentsCircleList = new ArrayList<Circle>();
+	private ArrayList<Circle> opponentsBulletList = new ArrayList<Circle>();
 	ImagePattern imageLookLeft;
 	ImagePattern imageLookRight;
 
@@ -20,6 +22,9 @@ public class Opponents {
 		
 		for (int i = 0; i < 4; i++) {
 			opponentsCircleList.add(new Circle(-30,-30,20));
+		}
+		for (int i = 0; i < 4; i++) {
+			opponentsBulletList.add(new Circle(-30,-30,3));
 		}
 		this.bank = bank;
 	}
@@ -35,6 +40,8 @@ public class Opponents {
 			}
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(bank.getOpponents().getOpponentsList().get(i).getxPos());
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(bank.getOpponents().getOpponentsList().get(i).getyPos());
+			bank.getOpponents().getOpponentsBulletList().get(i).setCenterX(bank.getOpponents().getBulletsList().get(i).getCurrentCordsX());
+			bank.getOpponents().getOpponentsBulletList().get(i).setCenterY(bank.getOpponents().getBulletsList().get(i).getCurrentCordsY());
 			
 				}
 			}
@@ -61,6 +68,22 @@ public class Opponents {
 
 	public void setOpponentsCircleList(ArrayList<Circle> opponentsCircleList) {
 		this.opponentsCircleList = opponentsCircleList;
+	}
+
+	public ArrayList<Circle> getOpponentsBulletList() {
+		return opponentsBulletList;
+	}
+
+	public void setOpponentsBulletList(ArrayList<Circle> opponentsBulletList) {
+		this.opponentsBulletList = opponentsBulletList;
+	}
+
+	public ArrayList<Bullet> getBulletsList() {
+		return bulletsList;
+	}
+
+	public void setBulletList(ArrayList<Bullet> bulletList) {
+		this.bulletsList = bulletList;
 	}
 
 }
