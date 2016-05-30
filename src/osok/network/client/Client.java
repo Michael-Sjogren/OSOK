@@ -31,10 +31,12 @@ public class Client{
 
         try {
            Socket socket = new Socket( bank.getPlayer().getIp() ,bank.getPlayer().getPort());
+
             if(socket.isClosed()){
                 return;
             }else{
                 player.setIsConnected(true);
+                new ChatClient(55555 , bank.getPlayer().getIp() , bank);
             }
            this.socket = socket;
         } catch (IOException e) {
@@ -51,6 +53,7 @@ public class Client{
         read = new ClientRead(socket,bank);
         readingThread = new Thread(read , "  client-read-thread ");
         readingThread.start();
+
     }
 
     /** terminates threads **/
@@ -90,24 +93,15 @@ public class Client{
         @Override
         public void run(){
                     System.out.println(socket.isConnected());
-                     String condition = bank.getPlayer().getUsername() + " : " + "null";
+               //      String condition = bank.getPlayer().getUsername() + " : " + "null";
 
                     try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
                         Gson gson = new Gson();
-                        String oldMessage ="";
-                        String newMessage = "";
 
                          while(running){
                              Thread.sleep(1);
                              newPlayers.clear();
                              oldPlayers = gson.fromJson( br.readLine() , ArrayList.class);
-                             newMessage = br.readLine();
-
-                                 if(!newMessage.equals(condition) && !newMessage.equals(oldMessage)){
-                                     bank.getGui().getChatLog().appendText("\n"+newMessage);
-                                     oldMessage = newMessage;
-                                 }
-
 
                              try{
                                  for(int i = 0; i < oldPlayers.size(); i++){
@@ -144,12 +138,10 @@ public class Client{
             public void run(){
                 try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
                     gson = new Gson();
-                    String message = "";
                     while(running){
-                        Thread.sleep(17);
+                        Thread.sleep(1);
                         pw.println(gson.toJson(bank.getPlayer()));
                         pw.flush();
-                        pw.println(bank.getPlayer().getUsername() + " : " + bank.getPlayer().getMessage());
                     }
                 }catch (Exception e){
                     e.printStackTrace();

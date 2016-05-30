@@ -3,6 +3,7 @@ package osok.network.server;
 import application.Bank;
 import application.Player;
 import com.google.gson.Gson;
+import osok.network.client.ChatClient;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -27,18 +28,16 @@ public class Server {
 
                 if (clients.size() < 5) {
                     csocket = ssock.accept();
-
-                    new Thread(new ServerRead(csocket , handler)).start();
-                    new Thread(new ServerWrite(csocket , handler)).start();
-                    System.out.println("client connected" + "");
+                    System.out.println("client connected port : " + csocket.getPort());
+                    new Thread(new ServerRead(csocket)).start();
+                    new Thread(new ServerWrite(csocket)).start();
                     clients.add(csocket);
                     players.add(null);
+                    new ChatServer();
                 } else if (clients.size() >= 5) {
                     System.out.println("player max limit");
                 }
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
             closeSocket(csocket);
@@ -47,44 +46,30 @@ public class Server {
 
     static class ServerRead implements Runnable {
         private Socket csocket;
-        private ServerMessageHandler handler;
         private Gson gson;
         private Player player;
 
-        public ServerRead(Socket csocket , ServerMessageHandler handler) {
+        public ServerRead(Socket csocket) {
             this.csocket = csocket;
-            this.handler = handler;
         }
 
         @Override
         public void run() {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(csocket.getInputStream()))) {
                 gson = new Gson();
-                String oldMessage = " ";
-                String newMessage = " ";
                 String object;
 
                 while (true) {
                     Thread.sleep(1);
 
                     object = br.readLine();
-                    newMessage = br.readLine();
                     player = gson.fromJson(object, Player.class);
-                    String condition = player.getUsername() + " : " + "null";
-
-                    if(!newMessage.equals(condition) && !newMessage.equals(oldMessage)){
-                        System.out.println("from server read "+newMessage);
-                        handler.setMessage(newMessage);
-                        oldMessage = newMessage;
-                    }
-
 
                     for (int i = 0; i < clients.size(); i++) {
                         if (csocket.getPort() == clients.get(i).getPort()) {
                             players.set(i, player);
                         }
                     }
-
                 }
             } catch (IOException e) {
                 closeSocket(csocket);
@@ -104,9 +89,8 @@ public class Server {
         private Socket csocket;
         private ServerMessageHandler handler;
 
-        ServerWrite(Socket csocket, ServerMessageHandler handler) {
+        ServerWrite(Socket csocket) {
             this.csocket = csocket;
-            this.handler = handler;
         }
 
         public void run() {
@@ -115,8 +99,6 @@ public class Server {
                 while (true) {
                     Thread.sleep(1);
                     pw.println(stringifiyInfo(players , clients , csocket));
-                    pw.flush();
-                    pw.println(handler.getMessage());
                     pw.flush();
                 }
             } catch (IOException e) {
@@ -154,19 +136,6 @@ public class Server {
         }
     }
 
-
-    static class ServerMessageHandler {
-
-        private String message = "";
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-    }
 }
 
 
