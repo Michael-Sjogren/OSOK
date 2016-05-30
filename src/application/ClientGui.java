@@ -5,11 +5,15 @@ import java.util.Arrays;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import osok.network.client.Client;
@@ -20,6 +24,7 @@ public class ClientGui {
     private Scene scene;
     private BorderPane root;
     private Circle playerCircle;
+    private Circle playerBullet;
     private ImageView view;
     private Player player;
     private Image imageLookRight;
@@ -60,8 +65,9 @@ public class ClientGui {
         patternLookLeft = new ImagePattern(imageLookLeft);
         playerCircle = new Circle(bank.getPlayer().getxPos(), bank.getPlayer().getyPos(), bank.getPlayer().getSize());
         playerCircle.setFill(patternLookLeft);
+        playerBullet = new Circle(bank.getBullet().getIdleCordsX(),bank.getBullet().getIdleCordsY(),bank.getBullet().getSize());
         iv1.setImage(image);
-        root.getChildren().addAll(iv1, playerCircle);
+        root.getChildren().addAll(iv1, playerCircle,playerBullet);
 
         for (int i = 0; i < bank.getPlatforms().size(); i++) {
             for (int j = 0; j < bank.getPlatforms().get(i).getPlatform().size(); j++) {
@@ -71,7 +77,8 @@ public class ClientGui {
 
         }
         for (int i = 0; i < 4; i++) {
-			root.getChildren().add(bank.getOpponents().getOpponentsCircleList().get(i));
+			root.getChildren().addAll(bank.getOpponents().getOpponentsCircleList().get(i));
+			
 		}
         root.setBottom(createChatGUI());
         return root;
@@ -140,5 +147,13 @@ public class ClientGui {
     public TextField getMessageInput() {
         return messageInput;
     }
+
+	public Circle getPlayerBullet() {
+		return playerBullet;
+	}
+
+	public void setPlayerBullet(Circle playerBullet) {
+		this.playerBullet = playerBullet;
+	}
 
 }

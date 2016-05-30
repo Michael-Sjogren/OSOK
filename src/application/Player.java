@@ -1,12 +1,7 @@
 package application;
 
-import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
+public class Player{
 
-public class Player implements Serializable{
-
-	private transient LinkedList<Bullet> bulletList = new LinkedList<Bullet>();
 	private boolean connected;
 	private String username;
 	private transient String message;
@@ -18,6 +13,7 @@ public class Player implements Serializable{
 	private volatile boolean colUp = false, colDown = false, colLeft = false, colRight = false, firstTouch = false;
 	private boolean isLeft = true;
     private transient String newMessage;
+    private boolean kill=true;
 
     public Player() {
 	}
@@ -146,20 +142,20 @@ public class Player implements Serializable{
 		return connected;
 	}
 
-	public List<Bullet> getBulletList() {
-		return bulletList;
-	}
-
-	public void setBulletList(LinkedList<Bullet> bulletList) {
-		this.bulletList = bulletList;
-	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
 	public String getMessage() {
 		return message;
+	}
+
+	public boolean isKill() {
+		return kill;
+	}
+
+	public void setKill(boolean kill) {
+		this.kill = kill;
 	}
 
 }

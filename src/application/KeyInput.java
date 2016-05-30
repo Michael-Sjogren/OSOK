@@ -1,11 +1,8 @@
 package application;
 
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Duration;
 
 public class KeyInput {
 	private String message;
@@ -20,7 +17,7 @@ public class KeyInput {
 				bank.getPlayer().setLeft(true);
 			}
 			if (ep.getCode() == KeyCode.SPACE) {
-				Bullet bullet = new Bullet(bank.getPlayer(),bank);
+				bank.getBullet().shootBullet();
 			}
 			if (ep.getCode() == KeyCode.RIGHT) {
 				bank.getMove().moveRight();

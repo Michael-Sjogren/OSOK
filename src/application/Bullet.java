@@ -1,52 +1,145 @@
 package application;
 
-import java.util.LinkedList;
-
-import javafx.scene.shape.Line;
-
 public class Bullet {
 
-	private Player player;
-	private Bank bank;
-	private Line bulletLine;
-	private final int width = 5;
-	private int velX = 8;
+	private transient Bank bank;
+	private double idleCordsX = -30, idleCordsY = -30;
+	private double currentCordsX = 0, currentCordsY = 0;
+	private final double size = 3;
+	private final double velX = 15.0;
+	private boolean isLeft = true;
+	private boolean flying = false;
+	private boolean hit = false;
 	private int distanceTravelled = 0;
 
-	public Bullet(Player player, Bank bank) {
-		System.out.println("Spawn Bullet");
+	public Bullet(Bank bank) {
 		this.bank = bank;
-		this.player = player;
-		bulletLine = new Line(player.getxPos(), player.getyPos(), player.getxPos() + width, player.getyPos());
-		bulletLine.setStrokeWidth(3);
-		player.getBulletList().add(this);
-		bank.getGui().getRoot().getChildren().add(bulletLine);
-		if(bank.getPlayer().isLeft()){
-			velX *=-1;
-		}else{
-			velX*=1;
-		}
 
+	}
+
+	public void shootBullet() {
+		if (!flying) {
+			System.out.println("Shoot Bullet");
+			flying = true;
+			distanceTravelled = 0;
+			if (bank.getPlayer().isLeft()) {
+				isLeft = true;
+			} else {
+				isLeft = false;
+			}
+			currentCordsX = bank.getPlayer().getxPos();
+			currentCordsY = bank.getPlayer().getyPos();
+		}
 	}
 
 	public void moveBullet() {
+		if (flying) {
+			distanceTravelled += velX;
+			bank.getGui().getPlayerBullet().setCenterX(currentCordsX);
+			bank.getGui().getPlayerBullet().setCenterY(currentCordsY);
+			if (this.isLeft()) {
+				currentCordsX += velX * -1;
+			} else {
+				currentCordsX += velX * 1;
+			}
 
-		bulletLine.setStartX(bulletLine.getStartX() + velX);
-		bulletLine.setStartY(bulletLine.getStartY());
-		bulletLine.setEndX(bulletLine.getEndX() + velX);
-		bulletLine.setEndY(bulletLine.getEndY());
-		
-		distanceTravelled += velX;
-		
-		if (distanceTravelled > 1200) {
-//			deleteBullet();
+			if (distanceTravelled > 1050 || distanceTravelled < -1050) {
+				flying = false;
+				hideBullet();
+			}
+			checkCollision();
+		}
+
+	}
+
+	public void hideBullet() {
+		currentCordsX = idleCordsX;
+		currentCordsY = idleCordsY;
+		bank.getGui().getPlayerBullet().setCenterX(idleCordsX);
+		bank.getGui().getPlayerBullet().setCenterY(idleCordsY);
+	}
+
+	public void checkCollision() {
+		for (int i = 0; i < bank.getOpponents().getOpponentsCircleList().size(); i++) {
+			if(bank.getGui().getPlayerBullet().getBoundsInParent().intersects(bank.getOpponents().getOpponentsCircleList().get(i).getBoundsInParent())){
+				System.out.println("Hit");
+				flying = false;
+				hideBullet();
+				break;
+			}
 		}
 	}
 
-	public void deleteBullet() {
-		System.out.println("Delete Bullet");
-		bank.getPlayer().getBulletList().remove(this);
-				
-		}
+	public double getSize() {
+		return size;
+	}
+
+	public double getIdleCordsX() {
+		return idleCordsX;
+	}
+
+	public void setIdleCordsX(double idleCordsX) {
+		this.idleCordsX = idleCordsX;
+	}
+
+	public double getIdleCordsY() {
+		return idleCordsY;
+	}
+
+	public void setIdleCordsY(double idleCordsY) {
+		this.idleCordsY = idleCordsY;
+	}
+
+	public double getCurrentCordsX() {
+		return currentCordsX;
+	}
+
+	public void setCurrentCordsX(double currentCordsX) {
+		this.currentCordsX = currentCordsX;
+	}
+
+	public double getCurrentCordsY() {
+		return currentCordsY;
+	}
+
+	public void setCurrentCordsY(double currentCordsY) {
+		this.currentCordsY = currentCordsY;
+	}
+
+	public double getVelX() {
+		return velX;
+	}
+
+	public boolean isLeft() {
+		return isLeft;
+	}
+
+	public void setLeft(boolean isLeft) {
+		this.isLeft = isLeft;
+	}
+
+	public boolean isFlying() {
+		return flying;
+	}
+
+	public void setFlying(boolean flying) {
+		this.flying = flying;
+	}
+
+	public boolean isHit() {
+		return hit;
+	}
+
+	public void setHit(boolean hit) {
+		this.hit = hit;
+	}
+
+	public int getDistanceTravelled() {
+		return distanceTravelled;
+	}
+
+	public void setDistanceTravelled(int distanceTravelled) {
+		this.distanceTravelled = distanceTravelled;
+	}
 
 }

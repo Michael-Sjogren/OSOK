@@ -50,10 +50,8 @@ public class Game implements Runnable {
 		bank.getCollision().checkCollision();
 		bank.getGravity().fall();
 		bank.getMove().movePlayer();
-		for(Bullet bullet : bank.getPlayer().getBulletList()){
-			bullet.moveBullet();
-		}
 		bank.getOpponents().updateOpponents();
+		bank.getBullet().moveBullet();
 		
 	}
 	public boolean isRunning() {

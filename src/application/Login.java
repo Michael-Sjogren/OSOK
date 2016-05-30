@@ -114,9 +114,9 @@ public class Login extends Application{
 			  player.setUsername(userName.getText());
               player.setIp(ip.getText());
                player.setPort(Integer.parseInt(port.getText()));
-			  for (int i = 0; i <  bank.opponents.getOpponentsList().size(); i++){
-				  if(userName.getText().equals(bank.opponents.getOpponentsList().get(i).getUsername())){
-					  System.out.println(bank.opponents.getOpponentsList().get(i).getUsername());
+			  for (int i = 0; i <  bank.getOpponents().getOpponentsList().size(); i++){
+				  if(userName.getText().equals(bank.getOpponents().getOpponentsList().get(i).getUsername())){
+					  System.out.println(bank.getOpponents().getOpponentsList().get(i).getUsername());
 					  System.out.println("username not unique!");
 					  userName.setText("");
 				  }else{

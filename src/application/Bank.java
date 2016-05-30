@@ -5,22 +5,24 @@ import java.util.List;
 
 public class Bank {
 
-	Player player;
-	Opponents opponents;
-	Move move;
-	KeyInput keyInput;
-	Gravity gravity;
-	Collision collision;
-	Game game;
-	Thread thread;
-	ClientGui gui;
-	Login login;
+	private Player player;
+	private Opponents opponents;
+	private Move move;
+	private KeyInput keyInput;
+	private Gravity gravity;
+	private Collision collision;
+	private Game game;
+	private Thread thread;
+	private ClientGui gui;
+	private Login login;
+	private Bullet bullet;
 
 	private List<Platform2D> platforms = new ArrayList<Platform2D>();
 
 	public Bank(Login login) {
 		this.login = login;
 		player = new Player();
+		bullet = new Bullet(this);
 		opponents = new Opponents(this);
 		move = new Move(this);
 		gravity = new Gravity(this);
@@ -114,6 +116,14 @@ public class Bank {
 
 	public Opponents getOpponents() {
 		return opponents;
+	}
+
+	public Bullet getBullet() {
+		return bullet;
+	}
+
+	public void setBullet(Bullet bullet) {
+		this.bullet = bullet;
 	}
 
 	public void setOpponents(Opponents opponents) {
