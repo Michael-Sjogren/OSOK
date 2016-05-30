@@ -2,6 +2,9 @@ package application;
 
 import java.util.Arrays;
 
+import javafx.animation.Animation;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import osok.network.client.Client;
 
 public class ClientGui {
@@ -39,6 +43,13 @@ public class ClientGui {
     private FlowPane msgInputBox;
     private VBox chatLogBox;
 
+    private int COLUMNS  =   8;
+    private int COUNT    =  8;
+    private int OFFSET_X =  0;
+    private int OFFSET_Y =  0;
+    private int WIDTH    = 1024;
+    private int HEIGHT   = 720;
+
     public ClientGui(Bank bank) {
         this.bank = bank;
         System.out.println("Starting Game");
@@ -57,8 +68,6 @@ public class ClientGui {
 
     public Parent createContent(Player player) {
         root = new BorderPane();
-        Image image = new Image("Sprite-bakgrund.png");
-        ImageView iv1 = new ImageView();
         imageLookRight = new Image("Sprite-0009.png");
         imageLookLeft = new Image("Sprite-00010.png");
         patternLookRight = new ImagePattern(imageLookRight);
@@ -66,8 +75,23 @@ public class ClientGui {
         playerCircle = new Circle(bank.getPlayer().getxPos(), bank.getPlayer().getyPos(), bank.getPlayer().getSize());
         playerCircle.setFill(patternLookLeft);
         playerBullet = new Circle(bank.getBullet().getIdleCordsX(),bank.getBullet().getIdleCordsY(),bank.getBullet().getSize());
-        iv1.setImage(image);
-        root.getChildren().addAll(iv1, playerCircle,playerBullet);
+
+        ImageView imageView = new ImageView("Sprite-00011-sheet-background.png");
+        imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
+        Animation animation = new SpriteAnimation(
+                imageView,
+                Duration.millis(1000),
+                COUNT, COLUMNS,
+                OFFSET_X, OFFSET_Y,
+                WIDTH, HEIGHT
+        );
+
+        animation.setCycleCount(Animation.INDEFINITE);
+        animation.play();
+
+        Group group = new Group(imageView);
+
+        root.getChildren().addAll(group, playerCircle,playerBullet);
 
         for (int i = 0; i < bank.getPlatforms().size(); i++) {
             for (int j = 0; j < bank.getPlatforms().get(i).getPlatform().size(); j++) {
