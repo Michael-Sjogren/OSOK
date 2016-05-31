@@ -141,8 +141,6 @@ public class ClientGui {
     }
     
     public Pane createChatGUI(){
-
-
         chatLog = new TextArea();
         messageInput = new TextField();
         sendMessage = new Button("send");

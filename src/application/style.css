@@ -5,7 +5,7 @@
 .message-input {
     -fx-background-color: rgba(0, 0, 0, 0.4);
     -fx-border-color: rgba(0, 0,0 0.6);
-    -fx-max-width: 250px;
+    -fx-max-width: 407px;
     -fx-text-fill: aliceblue;
     -fx-padding: 10px;
     -fx-spacing: 10px;
@@ -16,7 +16,8 @@
     -fx-font-style: normal;
     -fx-font-size: 1.5em;
     -fx-text-fill : rgba(226, 241, 255, 1);
-    -fx-max-width: 250px;
+    -fx-max-height: 178px;
+    -fx-max-width: 407px;
     -fx-spacing: 100px;
     -fx-border-color: rgba(0,0,0,0.6);
 }
