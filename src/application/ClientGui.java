@@ -33,6 +33,12 @@ public class ClientGui {
 	private ImagePattern patternLookRight;
 	private ImagePattern patternLookLeft;
 	private String message;
+
+
+	public Pane getChatUI() {
+		return chatUI;
+	}
+
 	private Pane chatUI;
 	private TextArea chatLog;
 	private TextField messageInput;

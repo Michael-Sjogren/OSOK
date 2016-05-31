@@ -65,31 +65,35 @@ public class KeyInput {
 
 		bank.getGui().getMessageInput().addEventHandler(ActionEvent.ANY , e -> {
 
-			 message = bank.getGui().getMessageInput().getText();
-			if(!message.equals("")){
-				bank.getPlayer().setMessage(message);
-                bank.getGui().getMessageInput().clear();
-                bank.getGui().getChatLog().setFocusTraversable(false);
-                bank.getGui().getMessageInput().setFocusTraversable(false);
-                isShowing = false;
-			}
+
 		});
 
-        bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_RELEASED , event -> {
+        bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED , event -> {
             if(event.getCode() == KeyCode.ENTER){
-                if(isShowing){
-                    bank.getGui().getMessageInput().setStyle("visibility: hidden");
-                    bank.getGui().getChatLog().setStyle("-fx-background-color: rgba(59, 64, 68, 0.2);");
-                    bank.getGui().getChatLog().lookup(".scroll-bar:vertical").setStyle("-fx-opacity: 0");
-                    isShowing = false;
-                }else{
-                    bank.getGui().getMessageInput().setFocusTraversable(true);
-                    bank.getGui().getMessageInput().setStyle("visibility: visible");
-                    bank.getGui().getChatLog().setStyle("-fx-background-color: rgba(59, 64, 68, 0.4);");
-                    bank.getGui().getChatLog().lookup(".scroll-bar:vertical").setStyle("-fx-opacity: 1");
-                    isShowing = true;
-                }
 
+				if(isShowing){
+					message = bank.getGui().getMessageInput().getText();
+					if(!message.equals("")){
+						bank.getPlayer().setMessage(message);
+						bank.getGui().getMessageInput().clear();
+						bank.getGui().getChatLog().setFocusTraversable(false);
+						bank.getGui().getMessageInput().setFocusTraversable(false);
+						isShowing = false;
+					}
+                    bank.getGui().getChatUI().setStyle("visibility: hidden");
+					bank.getGui().getMessageInput().setStyle("visibility: hidden");
+					bank.getGui().getChatLog().setStyle("-fx-background-color: rgba(59, 64, 68, 0.2);");
+					bank.getGui().getChatLog().lookup(".scroll-bar:vertical").setStyle("-fx-opacity: 0");
+					isShowing = false;
+				}else{
+					bank.getGui().getMessageInput().setFocusTraversable(true);
+                    bank.getGui().getChatUI().setStyle("visibility: visible");
+					bank.getGui().getMessageInput().setStyle("visibility: visible");
+
+					bank.getGui().getChatLog().setStyle("-fx-background-color: rgba(59, 64, 68, 0.4);");
+					bank.getGui().getChatLog().lookup(".scroll-bar:vertical").setStyle("-fx-opacity: 1");
+					isShowing = true;
+				}
             }
 
 
