@@ -45,10 +45,10 @@ public class Opponents {
 			
 				}
 			}
-//			for(int i = bank.getOpponents().getOpponentsList().size();i<4;i++){
-//				bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(-30);
-//				bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(-30);
-//						}
+			for(int i = bank.getOpponents().getOpponentsList().size();i<4;i++){
+				bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(-30);
+				bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(-30);
+						}
 		}catch(Exception e){
 			System.out.println(e.getMessage());
 		}
