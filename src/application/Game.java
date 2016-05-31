@@ -50,6 +50,7 @@ public class Game implements Runnable {
 		bank.getMove().movePlayer();
 		bank.getOpponents().updateOpponents();
 		bank.getBullet().moveBullet();
+	//	bank.getGui().updateScoreboard();
 		
 	}
 	public boolean isRunning() {

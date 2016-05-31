@@ -24,7 +24,7 @@ public class Opponents {
 			opponentsCircleList.add(new Circle(-30,-30,20));
 		}
 		for (int i = 0; i < 4; i++) {
-			opponentsBulletList.add(new Circle(-30,-30,3));
+			opponentsBulletList.add(new Circle(-60,-60,3));
 		}
 		this.bank = bank;
 	}
@@ -53,6 +53,8 @@ public class Opponents {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	
 
 	public ArrayList<Player> getOpponentsList() {
 		return opponentsList;

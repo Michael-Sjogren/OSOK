@@ -102,11 +102,10 @@ public class Client{
 
                          while(running){
                              Thread.sleep(1);
-                             newPlayers.clear();
                              oldPlayers = gson.fromJson( br.readLine() , ArrayList.class);
-                             newBullets.clear();
                              oldBullets = gson.fromJson( br.readLine() , ArrayList.class);
-
+                             newBullets.clear();
+                             newPlayers.clear();
                              try{
                                  for(int i = 0; i < oldPlayers.size(); i++){
                                      newPlayers.add(gson.fromJson(oldPlayers.get(i), Player.class));
@@ -114,8 +113,6 @@ public class Client{
                                  for(int i = 0; i < oldBullets.size(); i++){
                                      newBullets.add(gson.fromJson(oldBullets.get(i), Bullet.class));
                                  }
-
-
 
                                     bank.getOpponents().setOpponentsList(newPlayers);
                                     bank.getOpponents().setBulletList(newBullets);

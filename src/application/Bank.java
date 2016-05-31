@@ -12,10 +12,12 @@ public class Bank {
 	private Gravity gravity;
 	private Collision collision;
 	private Game game;
-	private Thread thread;
+	private Thread threadG;
+	private Thread threadSb;
 	private ClientGui gui;
 	private Login login;
 	private Bullet bullet;
+	private Scoreboard scoreboard;
 
 	private List<Platform2D> platforms = new ArrayList<Platform2D>();
 
@@ -28,10 +30,13 @@ public class Bank {
 		gravity = new Gravity(this);
 		collision = new Collision(this);
 		game = new Game(this);
-		thread = new Thread(game);
+		scoreboard = new Scoreboard(this);
+		threadSb = new Thread(scoreboard);
+		threadG = new Thread(game);
 		gui = new ClientGui(this);
 		keyInput = new KeyInput(this);
-		thread.start();
+		threadSb.start();
+		threadG.start();
 		
 	}
 
@@ -83,13 +88,6 @@ public class Bank {
 		this.game = game;
 	}
 
-	public Thread getThread() {
-		return thread;
-	}
-
-	public void setThread(Thread thread) {
-		this.thread = thread;
-	}
 
 	public List<Platform2D> getPlatforms() {
 		return platforms;
@@ -128,5 +126,29 @@ public class Bank {
 
 	public void setOpponents(Opponents opponents) {
 		this.opponents = opponents;
+	}
+
+	public Scoreboard getScoreboard() {
+		return scoreboard;
+	}
+
+	public void setScoreboard(Scoreboard scoreboard) {
+		this.scoreboard = scoreboard;
+	}
+
+	public Thread getThreadG() {
+		return threadG;
+	}
+
+	public void setThreadG(Thread threadG) {
+		this.threadG = threadG;
+	}
+
+	public Thread getThreadSb() {
+		return threadSb;
+	}
+
+	public void setThreadSb(Thread threadSb) {
+		this.threadSb = threadSb;
 	}
 }

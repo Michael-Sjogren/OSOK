@@ -163,8 +163,10 @@ public class Login extends Application{
 		bank.getGame().setRunning(false);
         client.shutdown();
         chatClient.stopChat();
+        bank.getScoreboard().stopThread();
 		try {
-			bank.getThread().join();
+			bank.getThreadG().join();
+			bank.getThreadSb().join();
 			System.out.println("Game Thread and client socket Terminated");
 		} catch (Exception e) {
 			e.printStackTrace();
