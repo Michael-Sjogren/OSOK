@@ -154,7 +154,6 @@ class ChatRead implements Runnable{
             }
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

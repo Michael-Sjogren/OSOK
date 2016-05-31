@@ -38,17 +38,22 @@ public class Server {
 
                     new ChatServer();
                 } else if (clients.size() >= 5) {
-                    System.out.println("player max limit");
                 }
             }
         } catch (IOException e) {
-            closeSocket();
             e.printStackTrace();
-
+        }finally {
+            try {
+                csocket.close();
+                closeSocket(csocket);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     static class ServerRead implements Runnable {
+        private BufferedReader br;
         private Socket csocket;
         private Gson gson;
         private Player player;
@@ -61,7 +66,8 @@ public class Server {
 
         @Override
         public void run() {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(csocket.getInputStream()))) {
+            try  {
+                br = new BufferedReader(new InputStreamReader(csocket.getInputStream()));
                 gson = new Gson();
                 String object;
 
@@ -80,12 +86,19 @@ public class Server {
                         }
                     }
                 }
+
             } catch (IOException e) {
-                closeSocket();
-                System.out.println(e.getMessage());
-            } catch (InterruptedException e) {
-                closeSocket();
-                System.out.println(e.getMessage());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    br.close();
+                    csocket.close();
+                    closeSocket(csocket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -96,15 +109,17 @@ public class Server {
      **/
     static class ServerWrite implements Runnable {
 
+        private PrintWriter pw;
         private Socket csocket;
+        private ServerMessageHandler handler;
 
         ServerWrite(Socket csocket) {
             this.csocket = csocket;
         }
 
         public void run() {
-            try (PrintWriter pw = new PrintWriter(csocket.getOutputStream())) {
-
+            try  {
+                pw = new PrintWriter(csocket.getOutputStream());
                 while (true) {
                     Thread.sleep(1);
                     pw.println(stringifiyInfo(players, clients, csocket));
@@ -112,11 +127,20 @@ public class Server {
                     pw.println(stringifiyInfo(bullets, clients, csocket));
                     pw.flush();
                 }
+
             } catch (IOException e) {
-                closeSocket();
                 System.out.println(e.getMessage());
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                    pw.close();
+                    csocket.close();
+                    closeSocket(csocket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -133,19 +157,17 @@ public class Server {
         }
     }
 
-    public static void closeSocket() {
-        for (int i = 0; i < clients.size(); i++) {
-            System.out.println("checking connectons");
-            if (clients.get(i).isClosed()) {
+    public static void closeSocket(Socket socket) {
 
-                System.out.println("closing socket : " + i);
-                clients.remove(i);
-                players.remove(i);
-                bullets.remove(i);
-                System.out.println(clients.toString());
+        players.remove(clients.indexOf(socket));
+        bullets.remove(clients.indexOf(socket));
+        clients.remove(clients.indexOf(socket));
+        System.out.println(clients.toString());
+
             }
-        }
-    }
+
+
+
 
 }
 
@@ -153,5 +175,4 @@ public class Server {
 /**
  * Reads Client
  **/
-
 

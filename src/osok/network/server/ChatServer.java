@@ -21,7 +21,7 @@ public class ChatServer extends Thread{
     private ServerMessageHandler handler;
 
     public ChatServer(){
-       start();
+        start();
     }
 
     public void run(){
@@ -66,8 +66,8 @@ class ServerChatWrite implements Runnable {
 
             while(running){
                 Thread.sleep(200);
-                    pw.println(handler.getMessage());
-                    pw.flush();
+                pw.println(handler.getMessage());
+                pw.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,14 +98,16 @@ class ServerChatRead implements Runnable {
             while(true){
                 Thread.sleep(200);
                 newMessage = br.readLine();
-            try {
-                if(!newMessage.equals(oldMessage)){
-                    handler.setMessage(newMessage);
-                    oldMessage = newMessage;
-                }
-            }catch (Exception e){
+
+                try {
+                    if(!newMessage.equals(oldMessage)){
+                        handler.setMessage(newMessage);
+                        oldMessage = newMessage;
+                    }
+                }catch (Exception e){
 
                 }
+
             }
 
         } catch (IOException e) {

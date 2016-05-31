@@ -23,6 +23,7 @@ public class Client{
     private Player player;
 
 
+
     /* konstruktor */
     public Client(Bank bank, ChatClient chatClient){
 
@@ -61,10 +62,9 @@ public class Client{
             read.isRunning(false);
             write.isRunning(false);
             try {
-
+                    socket.close();
                     readingThread.join();
                     writingThread.join();
-                    socket.close();
                     System.out.println("-- client all threads terminated --");
 
             } catch (InterruptedException e) {
@@ -78,6 +78,7 @@ public class Client{
     /** reads from server **/
     class ClientRead implements Runnable{
 
+            private BufferedReader br;
             private Socket socket;
             private Bank bank;
             private volatile boolean running = true;
@@ -97,7 +98,8 @@ public class Client{
                     System.out.println(socket.isConnected());
                //      String condition = bank.getPlayer().getUsername() + " : " + "null";
 
-                    try (BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+                    try  {
+                        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                         Gson gson = new Gson();
 
                          while(running){
@@ -122,7 +124,14 @@ public class Client{
                          }
                     }catch (Exception e){
                     e.printStackTrace();
-                }
+                }finally {
+                        try {
+                            br.close();
+                            socket.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
             }
                     public void isRunning(boolean running) {
                     this.running = running;
@@ -132,6 +141,7 @@ public class Client{
     /** writes to server **/
     class ClientWrite implements Runnable{
 
+                private PrintWriter pw;
                 private Socket socket;
                 private Bank bank;
                 private volatile boolean running = true;
@@ -144,7 +154,8 @@ public class Client{
 
             @Override
             public void run(){
-                try (PrintWriter pw = new PrintWriter(socket.getOutputStream())){
+                try {
+                    pw = new PrintWriter(socket.getOutputStream());
                     gson = new Gson();
                     while(running){
                         Thread.sleep(1);
@@ -155,6 +166,13 @@ public class Client{
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                }finally {
+                    try {
+                        pw.close();
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
