@@ -82,9 +82,10 @@ public class Client{
             private Bank bank;
             private volatile boolean running = true;
             private  ArrayList<String> oldPlayers;
-            private ArrayList<Player> newPlayers = new ArrayList<Player>();
+            private ArrayList<Player> newPlayers = new ArrayList<>();
             private ArrayList<String> oldBullets;
-            private ArrayList<Bullet> newBullets = new ArrayList<Bullet>();
+            private ArrayList<Bullet> newBullets = new ArrayList<>();
+
 
         public ClientRead(Socket socket, Bank bank){
                 this.socket = socket;
@@ -113,6 +114,9 @@ public class Client{
                                  for(int i = 0; i < oldBullets.size(); i++){
                                      newBullets.add(gson.fromJson(oldBullets.get(i), Bullet.class));
                                  }
+
+
+
                                     bank.getOpponents().setOpponentsList(newPlayers);
                                     bank.getOpponents().setBulletList(newBullets);
                              }catch (Exception e){

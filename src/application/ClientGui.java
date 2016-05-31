@@ -7,10 +7,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -42,6 +39,7 @@ public class ClientGui {
     private Button sendMessage;
     private FlowPane msgInputBox;
     private VBox chatLogBox;
+    private  BorderPane scorePanel;
 
     private int COLUMNS  =   8;
     private int COUNT    =  8;
@@ -106,6 +104,7 @@ public class ClientGui {
 			
 		}
         root.setBottom(createChatGUI());
+        root.setCenter(createScoreboard());
         return root;
     }
 
@@ -162,10 +161,25 @@ public class ClientGui {
 
     }
 
+    public Pane createScoreboard(){
+        TextArea score = new TextArea("TEST 12355");
+        score.setEditable(false);
+        score.setMouseTransparent(true);
+        score.setFocusTraversable(false);
+
+        score.getStyleClass().add("score-textarea");
+        scorePanel = new BorderPane(score);
+        scorePanel.getStyleClass().add("score-panel");
+        return  scorePanel;
+    }
+
     public TextArea getChatLog() {
         return chatLog;
     }
 
+    public BorderPane getScorePanel() {
+        return scorePanel;
+    }
 
     public TextField getMessageInput() {
         return messageInput;

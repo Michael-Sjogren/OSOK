@@ -27,10 +27,15 @@ public class KeyInput {
 			if (ep.getCode() == KeyCode.UP) {
 				bank.getMove().jump();
 			}
+
+			if(ep.getCode() == KeyCode.TAB){
+				bank.getGui().getScorePanel().setStyle("visibility: visible");
+			}
+
 		});
 
 		bank.getLogin().getStage().addEventHandler(KeyEvent.KEY_PRESSED, ep -> {
-			
+
 
 		});
 
@@ -40,6 +45,9 @@ public class KeyInput {
 			}
 			if (er.getCode() == KeyCode.LEFT) {
 				bank.getMove().resetVelLeft();
+			}
+			if(er.getCode() == KeyCode.TAB){
+				bank.getGui().getScorePanel().setStyle("visibility: hidden");
 			}
 		});
 
@@ -83,6 +91,8 @@ public class KeyInput {
                 }
 
             }
+
+
         });
 
 

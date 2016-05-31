@@ -56,5 +56,21 @@
 
 
 .chat-log .scroll-pane .content{
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(0 , 0 , 0, 0.1);
+}
+
+.score-panel{
+    -fx-spacing: 30px;
+    -fx-padding: 100px;
+}
+.score-textarea, .score-textarea .viewport, .score-textarea .content {
+    -fx-background-color: rgba(0 , 0, 0 , 0.1) ;
+    -fx-text-fill: white;
+    -fx-max-width: 500px;
+    -fx-max-height: 800px;
+    -fx-font-size: 25px;
+}
+
+.score-textarea {
+    -fx-border-color: black;
 }
