@@ -3,6 +3,7 @@ package application;
 import java.util.ArrayList;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
@@ -24,7 +25,11 @@ public class Opponents {
 			opponentsCircleList.add(new Circle(-30,-30,20));
 		}
 		for (int i = 0; i < 4; i++) {
-			opponentsBulletList.add(new Circle(-60,-60,3));
+			Circle temp = new Circle(-60,-60,5,Color.GOLDENROD);
+			temp.setStroke(Color.BLACK);
+			temp.setStrokeWidth(2);
+			opponentsBulletList.add(temp);
+			
 		}
 		this.bank = bank;
 	}

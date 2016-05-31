@@ -5,7 +5,7 @@ public class Bullet {
 	private transient Bank bank;
 	private double idleCordsX = -60, idleCordsY = -60;
 	private double currentCordsX = 0, currentCordsY = 0;
-	private final double size = 3;
+	private final double size = 5;
 	private final double velX = 15.0;
 	private boolean isLeft = true;
 	private boolean flying = false;
@@ -28,7 +28,7 @@ public class Bullet {
 				isLeft = false;
 			}
 			currentCordsX = bank.getPlayer().getxPos();
-			currentCordsY = bank.getPlayer().getyPos();
+			currentCordsY = bank.getPlayer().getyPos()-5;
 		}
 	}
 

@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -79,7 +80,9 @@ public class ClientGui {
 		playerCircle = new Circle(bank.getPlayer().getxPos(), bank.getPlayer().getyPos(), bank.getPlayer().getSize());
 		playerCircle.setFill(patternLookLeft);
 		playerBullet = new Circle(bank.getBullet().getIdleCordsX(), bank.getBullet().getIdleCordsY(),
-				bank.getBullet().getSize());
+				bank.getBullet().getSize(),Color.GOLDENROD);
+		playerBullet.setStroke(Color.BLACK);
+		playerBullet.setStrokeWidth(2);
 
 		ImageView imageView = new ImageView("Sprite-00011-sheet-background.png");
 		imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
