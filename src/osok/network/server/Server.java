@@ -38,12 +38,11 @@ public class Server {
 
                     new ChatServer();
                 } else if (clients.size() >= 5) {
-                    System.out.println("player max limit");
                 }
             }
         } catch (IOException e) {
+            closeSocket();
             e.printStackTrace();
-            closeSocket(csocket);
         }
     }
 
@@ -79,10 +78,12 @@ public class Server {
                         }
                     }
                 }
+
             } catch (IOException e) {
-                closeSocket(csocket);
+                closeSocket();
+
             } catch (Exception e) {
-                closeSocket(csocket);
+                closeSocket();
                 e.printStackTrace();
             }
         }
@@ -111,12 +112,14 @@ public class Server {
                     pw.println(stringifiyInfo(bullets, clients, csocket));
                     pw.flush();
                 }
+
             } catch (IOException e) {
+                closeSocket();
                 System.out.println(e.getMessage());
-                closeSocket(csocket);
+
             } catch (Exception e) {
+                closeSocket();
                 e.printStackTrace();
-                closeSocket(csocket);
             }
         }
 
@@ -133,16 +136,16 @@ public class Server {
         }
     }
 
-    public static void closeSocket(Socket csocket) {
+    public static void closeSocket() {
         for (int i = 0; i < clients.size(); i++) {
             System.out.println("checking connectons");
             if (clients.get(i).isClosed() == true) {
-
-                System.out.println(clients.get(i).getLocalAddress());
+                System.out.println("remove socket "  + i);
                 clients.remove(i);
                 players.remove(i);
                 bullets.remove(i);
-                System.out.println("connection closed");
+                System.out.println(clients.toString());
+
             }
         }
     }

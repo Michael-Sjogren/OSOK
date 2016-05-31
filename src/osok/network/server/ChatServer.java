@@ -99,10 +99,15 @@ class ServerChatRead implements Runnable {
                 Thread.sleep(200);
                 newMessage = br.readLine();
 
-                if(!newMessage.equals(oldMessage)){
-                    handler.setMessage(newMessage);
-                    oldMessage = newMessage;
+                try {
+                    if(!newMessage.equals(oldMessage)){
+                        handler.setMessage(newMessage);
+                        oldMessage = newMessage;
+                    }
+                }catch (Exception e){
+
                 }
+
             }
 
         } catch (IOException e) {
