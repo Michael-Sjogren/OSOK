@@ -29,7 +29,7 @@ public class Login extends Application{
 	private Stage stage;
     private Client client;
 
-	Image IMAGE = new Image("Sprite-glowing.png");
+	Image IMAGE = new Image("Sprite-glowing2.png");
 
 	private int COLUMNS  =   29;
 	private int COUNT    =  29;
