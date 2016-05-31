@@ -42,8 +42,9 @@ public class Server {
                 }
             }
         } catch (IOException e) {
+            closeSocket();
             e.printStackTrace();
-            closeSocket(csocket);
+
         }
     }
 
@@ -80,10 +81,11 @@ public class Server {
                     }
                 }
             } catch (IOException e) {
-                closeSocket(csocket);
-            } catch (Exception e) {
-                closeSocket(csocket);
-                e.printStackTrace();
+                closeSocket();
+                System.out.println(e.getMessage());
+            } catch (InterruptedException e) {
+                closeSocket();
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -95,7 +97,6 @@ public class Server {
     static class ServerWrite implements Runnable {
 
         private Socket csocket;
-        private ServerMessageHandler handler;
 
         ServerWrite(Socket csocket) {
             this.csocket = csocket;
@@ -112,11 +113,10 @@ public class Server {
                     pw.flush();
                 }
             } catch (IOException e) {
+                closeSocket();
                 System.out.println(e.getMessage());
-                closeSocket(csocket);
-            } catch (Exception e) {
-                e.printStackTrace();
-                closeSocket(csocket);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
             }
         }
 
@@ -133,16 +133,16 @@ public class Server {
         }
     }
 
-    public static void closeSocket(Socket csocket) {
+    public static void closeSocket() {
         for (int i = 0; i < clients.size(); i++) {
             System.out.println("checking connectons");
-            if (clients.get(i).isClosed() == true) {
+            if (clients.get(i).isClosed()) {
 
-                System.out.println(clients.get(i).getLocalAddress());
+                System.out.println("closing socket : " + i);
                 clients.remove(i);
                 players.remove(i);
                 bullets.remove(i);
-                System.out.println("connection closed");
+                System.out.println(clients.toString());
             }
         }
     }
