@@ -63,6 +63,8 @@ public class Bullet {
 		for (int i = 0; i < bank.getOpponents().getOpponentsCircleList().size(); i++) {
 			if(bank.getGui().getPlayerBullet().getBoundsInParent().intersects(bank.getOpponents().getOpponentsCircleList().get(i).getBoundsInParent())){
 				System.out.println("Hit");
+				bank.getPlayer().setScore(bank.getPlayer().getScore()+1);
+				System.out.println(bank.getPlayer().getScore());
 				flying = false;
 				hideBullet();
 				break;

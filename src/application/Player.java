@@ -14,6 +14,7 @@ public class Player{
 	private boolean isLeft = true;
     private transient String newMessage;
     private boolean kill=true;
+    private int score = 0;
 
     public Player() {
 	}
@@ -156,6 +157,14 @@ public class Player{
 
 	public void setKill(boolean kill) {
 		this.kill = kill;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 }

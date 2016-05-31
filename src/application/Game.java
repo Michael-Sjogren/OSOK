@@ -1,7 +1,5 @@
 package application;
 
-import javafx.scene.shape.Line;
-
 public class Game implements Runnable {
 	
 	Bank bank;
