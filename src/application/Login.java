@@ -127,30 +127,21 @@ public class Login extends Application{
 		btn.setOnAction(e-> {
           if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals("") )){
 
-			  Player player =	bank.getPlayer();
+			  Player player = bank.getPlayer();
 			  player.setUsername(userName.getText());
               player.setIp(ip.getText());
-               player.setPort(Integer.parseInt(port.getText()));
-			  for (int i = 0; i <  bank.getOpponents().getOpponentsList().size(); i++){
-				  if(userName.getText().equals(bank.getOpponents().getOpponentsList().get(i).getUsername())){
-					  System.out.println(bank.getOpponents().getOpponentsList().get(i).getUsername());
-					  System.out.println("username not unique!");
-					  userName.setText("");
-				  }else{
-					  player.setUsername(userName.getText());
-				  }
-			  }
+			  player.setPort(Integer.parseInt(port.getText()));
+			  player.setUsername(userName.getText());
 
-
-               System.out.println("USERNAME :: " +player.getUsername());
-              System.out.println("IP :: " +player.getIp());
-			  System.out.println("PORT :: " +player.getPort());
+			  // tries to connect to server when pressing login
 			  chatClient = new ChatClient(bank.getPlayer().getIp() , bank);
 			  client = new Client(bank);
 
-
+				// if connection is success setter isConnected in Client will be set to true and game scene will launch
                 if(player.isConnected()){
+					// sets scene of game
                     bank.getLogin().getStage().setScene(bank.getGui().getScene());
+					// starts chatClient
 					chatClient.startChatClient();
                 }
            }
@@ -173,7 +164,8 @@ public class Login extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
+	/**  terminates all threads on client side when window is closed **/
     public void stop(){
 		bank.getGame().setRunning(false);
         client.shutdown();
