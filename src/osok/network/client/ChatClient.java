@@ -1,6 +1,6 @@
 package osok.network.client;
 
-import application.Bank;
+import application.Controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.net.Socket;
 public class ChatClient {
 
     private String ip;
-    private Bank bank;
+    private Controller con;
     private ChatRead read;
     private ChatWrite write;
     private Thread chatThreadRead;
@@ -26,9 +26,9 @@ public class ChatClient {
     private Socket socket;
 
     /** constructor **/
-    public ChatClient(String ip, Bank bank){
+    public ChatClient(String ip, Controller con){
         this.ip = ip;
-        this.bank = bank;
+        this.con = con;
 
     }
 
@@ -36,8 +36,8 @@ public class ChatClient {
     public void startChatClient(){
         try  {
             socket = new Socket(ip ,55555);
-            read = new ChatRead(socket , bank);
-            write = new ChatWrite(socket , bank);
+            read = new ChatRead(socket , con);
+            write = new ChatWrite(socket , con);
 
             chatThreadRead = new Thread(read);
             chatThreadWrite = new Thread(write);
@@ -70,13 +70,13 @@ public class ChatClient {
 class ChatWrite implements Runnable {
 
     private Socket socket;
-    private Bank bank;
+    private Controller con;
     private boolean isRunning = true;
 
     /** Constructor **/
-    ChatWrite(Socket socket, Bank bank){
+    ChatWrite(Socket socket, Controller con){
         this.socket = socket;
-        this.bank = bank;
+        this.con = con;
     }
 
     @Override
@@ -91,9 +91,9 @@ class ChatWrite implements Runnable {
             while(isRunning){
                 Thread.sleep(200);
                 // gets message from textfield of chat
-                newMessage = bank.getPlayer().getMessage();
+                newMessage = con.getPlayer().getMessage();
                 // concatenates username with the message to show who's writing what
-                pw.println(bank.getPlayer().getUsername() + " : " + newMessage);
+                pw.println(con.getPlayer().getUsername() + " : " + newMessage);
                 pw.flush();
             }
         } catch (IOException e) {
@@ -112,16 +112,16 @@ class ChatWrite implements Runnable {
  * also controller reference to set the text of the chatLog (TextArea) for chat  **/
 class ChatRead implements Runnable{
 
-    private Bank bank;
+    private Controller con;
     private Socket socket;
     private String newMessage;
     private String oldMessage = "";
     private boolean isRunning = true;
 
     /** Constructor **/
-    ChatRead(Socket socket, Bank bank){
+    ChatRead(Socket socket, Controller con){
         this.socket = socket;
-        this.bank = bank;
+        this.con = con;
     }
 
     @Override
@@ -131,7 +131,7 @@ class ChatRead implements Runnable{
             System.out.println("client chat read running");
             boolean firstMessage = true;
 
-            String condition = bank.getPlayer().getUsername() + " : " + "null";
+            String condition = con.getPlayer().getUsername() + " : " + "null";
             while(isRunning){
                 // receives message from other client
                 newMessage = br.readLine();
@@ -139,10 +139,10 @@ class ChatRead implements Runnable{
                 if(!newMessage.equals(condition) && !newMessage.equals(oldMessage)){
                     if(!firstMessage){
                         // sets message to textarea of each client
-                        bank.getGui().getChatLog().appendText("\n"+newMessage);
+                        con.getGui().getChatLog().appendText("\n"+newMessage);
                     }else {
                         // sets message to textarea of each client
-                        bank.getGui().getChatLog().appendText(newMessage);
+                        con.getGui().getChatLog().appendText(newMessage);
                         firstMessage = false;
                     }
 

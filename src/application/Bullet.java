@@ -2,7 +2,7 @@ package application;
 /** Bullet class is a POJO of a bullet, it contains all the necessary infromation of the in-game bullet **/
 public class Bullet {
 
-	private transient Bank bank;
+	private transient Controller con;
 	private double idleCordsX = -60, idleCordsY = -60;
 	private double currentCordsX = 0, currentCordsY = 0;
 	private final double size = 5;
@@ -14,8 +14,8 @@ public class Bullet {
 	private int timeFlewn = 0;
 
 	/** Constructor demands a reference to the "controller" **/ //which allows the class to work with other classes
-	public Bullet(Bank bank) {
-		this.bank = bank;
+	public Bullet(Controller con) {
+		this.con = con;
 
 	}
 	
@@ -27,14 +27,14 @@ public class Bullet {
 			flying = true;
 			distanceTravelled = 0;
 			//Checks the players direction and sets the bullets accordingly
-			if (bank.getPlayer().isLeft()) {
+			if (con.getPlayer().isLeft()) {
 				isLeft = true;
 			} else {
 				isLeft = false;
 			}
-			currentCordsX = bank.getPlayer().getxPos();
+			currentCordsX = con.getPlayer().getxPos();
 			//corrects the bullet spawn point to match the barrel of the player
-			currentCordsY = bank.getPlayer().getyPos()-5;
+			currentCordsY = con.getPlayer().getyPos()-5;
 		}
 	}
 
@@ -43,8 +43,8 @@ public class Bullet {
 		if (flying) {
 			//adds the pixels flewn to the distanceTravelled variable
 			distanceTravelled += velX;
-			bank.getGui().getPlayerBullet().setCenterX(currentCordsX);
-			bank.getGui().getPlayerBullet().setCenterY(currentCordsY);
+			con.getGui().getPlayerBullet().setCenterX(currentCordsX);
+			con.getGui().getPlayerBullet().setCenterY(currentCordsY);
 			if (this.isLeft()) {
 				currentCordsX += velX * -1;
 			} else {
@@ -64,19 +64,19 @@ public class Bullet {
 	public void hideBullet() {
 		currentCordsX = idleCordsX;
 		currentCordsY = idleCordsY;
-		bank.getGui().getPlayerBullet().setCenterX(idleCordsX);
-		bank.getGui().getPlayerBullet().setCenterY(idleCordsY);
+		con.getGui().getPlayerBullet().setCenterX(idleCordsX);
+		con.getGui().getPlayerBullet().setCenterY(idleCordsY);
 	}
 
 	/** Checks if the players bullet is intercecting with a opponent **/
 	public void checkCollision() {
-		for (int i = 0; i < bank.getOpponents().getOpponentsCircleList().size(); i++) {
+		for (int i = 0; i < con.getOpponents().getOpponentsCircleList().size(); i++) {
 			//Checks if the playerbullet is intersecting with any of the oponent circles
-			if(bank.getGui().getPlayerBullet().getBoundsInParent().intersects(bank.getOpponents().getOpponentsCircleList().get(i).getBoundsInParent())){
+			if(con.getGui().getPlayerBullet().getBoundsInParent().intersects(con.getOpponents().getOpponentsCircleList().get(i).getBoundsInParent())){
 				//When a opponent is hit the bullet gets removed from screen and the player gets 1 point
 				System.out.println("Hit");
-				bank.getPlayer().setScore(bank.getPlayer().getScore()+1);
-				System.out.println(bank.getPlayer().getScore());
+				con.getPlayer().setScore(con.getPlayer().getScore()+1);
+				System.out.println(con.getPlayer().getScore());
 				flying = false;
 				hideBullet();
 				break;

@@ -3,7 +3,7 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bank {
+public class Controller {
 
 	private Player player;
 	private Opponents opponents;
@@ -21,7 +21,7 @@ public class Bank {
 
 	private List<Platform2D> platforms = new ArrayList<Platform2D>();
 
-	public Bank(Login login) {
+	public Controller(Login login) {
 		this.login = login;
 		player = new Player();
 		bullet = new Bullet(this);

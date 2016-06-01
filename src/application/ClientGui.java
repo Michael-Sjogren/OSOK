@@ -21,7 +21,7 @@ import javafx.util.Duration;
 /**CientGui class contains the vast majority of the Client Gui **/
 public class ClientGui {
 	//I wouldn't even touch this class with a long pointy stick
-	private Bank bank;
+	private Controller con;
 	private Scene scene;
 	private BorderPane root;
 	private Circle playerCircle;
@@ -50,8 +50,8 @@ public class ClientGui {
 	private int HEIGHT = 720;
 
 	/** Constructor demands a reference to the "controller" **/ //which allows the class to work with other classes
-	public ClientGui(Bank bank) {
-		this.bank = bank;
+	public ClientGui(Controller con) {
+		this.con = con;
 		System.out.println("Starting Game");
 		//creates platform which later gets drawn 
 		Platform2D p2D0 = new Platform2D(106, 150);
@@ -60,9 +60,9 @@ public class ClientGui {
 		Platform2D p2D3 = new Platform2D(618, 150);
 		Platform2D p2D4 = new Platform2D(618, 500);
 		//Adds all the platforms to a array which is stored in the "controller"
-		bank.getPlatforms().addAll(Arrays.asList(p2D0, p2D1, p2D2, p2D3, p2D4));
+		con.getPlatforms().addAll(Arrays.asList(p2D0, p2D1, p2D2, p2D3, p2D4));
 		//call the method a scene for the game with the current player and sets the res to 1024x720
-		scene = new Scene(createContent(bank.getPlayer()), 1024, 720);
+		scene = new Scene(createContent(con.getPlayer()), 1024, 720);
 		scene.getStylesheets().add("/application/style.css");
 
 	}
@@ -76,11 +76,11 @@ public class ClientGui {
 		patternLookRight = new ImagePattern(imageLookRight);
 		patternLookLeft = new ImagePattern(imageLookLeft);
 		//Creates a circle the players properties
-		playerCircle = new Circle(bank.getPlayer().getxPos(), bank.getPlayer().getyPos(), bank.getPlayer().getSize());
+		playerCircle = new Circle(con.getPlayer().getxPos(), con.getPlayer().getyPos(), con.getPlayer().getSize());
 		playerCircle.setFill(patternLookLeft);
 		//Creates the bullet which the player shoots
-		playerBullet = new Circle(bank.getBullet().getIdleCordsX(), bank.getBullet().getIdleCordsY(),
-				bank.getBullet().getSize(), Color.GOLDENROD);
+		playerBullet = new Circle(con.getBullet().getIdleCordsX(), con.getBullet().getIdleCordsY(),
+				con.getBullet().getSize(), Color.GOLDENROD);
 		playerBullet.setStroke(Color.BLACK);
 		playerBullet.setStrokeWidth(2);
 
@@ -98,17 +98,17 @@ public class ClientGui {
 		root.getChildren().addAll(group, playerCircle, playerBullet);
 
 		//adds all the platforms
-		for (int i = 0; i < bank.getPlatforms().size(); i++) {
-			for (int j = 0; j < bank.getPlatforms().get(i).getPlatform().size(); j++) {
-				root.getChildren().add(bank.getPlatforms().get(i).getPlatform().get(j));
+		for (int i = 0; i < con.getPlatforms().size(); i++) {
+			for (int j = 0; j < con.getPlatforms().get(i).getPlatform().size(); j++) {
+				root.getChildren().add(con.getPlatforms().get(i).getPlatform().get(j));
 			}
-			root.getChildren().add(bank.getPlatforms().get(i).getImage());
+			root.getChildren().add(con.getPlatforms().get(i).getImage());
 
 		}
 		//Add all the opponents circles to the root/BorderPane
 		for (int i = 0; i < 4; i++) {
-			root.getChildren().addAll(bank.getOpponents().getOpponentsCircleList().get(i));
-			root.getChildren().addAll(bank.getOpponents().getOpponentsBulletList().get(i));
+			root.getChildren().addAll(con.getOpponents().getOpponentsCircleList().get(i));
+			root.getChildren().addAll(con.getOpponents().getOpponentsBulletList().get(i));
 
 		}
 		root.setBottom(createChatGUI());
@@ -150,8 +150,8 @@ public class ClientGui {
 	}
 
 	public void removePlayerCircle() {
-		bank.getGui().getPlayerCircle().setCenterX(-30);
-		bank.getGui().getPlayerCircle().setCenterY(-30);
+		con.getGui().getPlayerCircle().setCenterX(-30);
+		con.getGui().getPlayerCircle().setCenterY(-30);
 	}
 	
 	/** Setter and Getters **/

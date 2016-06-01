@@ -31,7 +31,7 @@ import osok.network.client.Client;
  *
  **/
 public class Login extends Application{
-	private Bank bank;
+	private Controller con;
 	private Stage stage;
     private Client client;
 
@@ -56,7 +56,7 @@ public class Login extends Application{
     @Override
 	public void start(Stage primaryStage) throws Exception {
 		this.stage=primaryStage;
-		bank = new Bank(this);
+		con = new Controller(this);
 		BorderPane pane = new BorderPane();
 		ImageView imageView = new ImageView(IMAGE);
 		imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
@@ -126,20 +126,20 @@ public class Login extends Application{
 		btn.setOnAction(e-> {
           if(!(ip.getText().equals("") && userName.getText().equals("") && port.getText().equals("") )){
 
-			  Player player = bank.getPlayer();
+			  Player player = con.getPlayer();
 			  player.setUsername(userName.getText());
               player.setIp(ip.getText());
 			  player.setPort(Integer.parseInt(port.getText()));
 			  player.setUsername(userName.getText());
 
 			  // tries to connect to server when pressing login
-			  chatClient = new ChatClient(bank.getPlayer().getIp() , bank);
-			  client = new Client(bank);
+			  chatClient = new ChatClient(con.getPlayer().getIp() , con);
+			  client = new Client(con);
 
 				// if connection is success setter isConnected in Client will be set to true and game scene will launch
                 if(player.isConnected()){
 					// sets scene of game
-                    bank.getLogin().getStage().setScene(bank.getGui().getScene());
+                    con.getLogin().getStage().setScene(con.getGui().getScene());
 					// starts chatClient
 					chatClient.startChatClient();
                 }
@@ -166,13 +166,13 @@ public class Login extends Application{
 
 	/**  terminates all threads on client side when window is closed **/
     public void stop(){
-		bank.getGame().setRunning(false);
+		con.getGame().setRunning(false);
         client.shutdown();
         chatClient.stopChat();
-        bank.getScoreboard().stopThread();
+        con.getScoreboard().stopThread();
 		try {
-			bank.getThreadG().join();
-			bank.getThreadSb().join();
+			con.getThreadG().join();
+			con.getThreadSb().join();
 			System.out.println("Game Thread and client socket Terminated");
 		} catch (Exception e) {
 			e.printStackTrace();

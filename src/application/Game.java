@@ -2,7 +2,7 @@ package application;
 /** Game class runs at 60hz and it's the main thread on the client side, it is the game-engine **/
 public class Game implements Runnable {
 	
-	Bank bank;
+	Controller con;
 	long lastTime = System.nanoTime();
 	double amountOfTicks = 60.0;
 	double ns = 1000000000 / amountOfTicks;
@@ -13,8 +13,8 @@ public class Game implements Runnable {
 	boolean running = true;
 
 	/** Constructor demands a reference to the "controller" **/ //which allows the class to work with other classes
-	public Game(Bank bank) {
-		this.bank=bank;
+	public Game(Controller con) {
+		this.con=con;
 	}
 	//Calls the tick-method at 60 times/sec
 	public void run() {
@@ -46,11 +46,11 @@ public class Game implements Runnable {
 	}
 	/** Contain the calls which are reqiured for game updates and logic **/
 	private void tick() {
-		bank.getCollision().checkCollision();
-		bank.getGravity().fall();
-		bank.getMove().movePlayer();
-		bank.getOpponents().updateOpponents();
-		bank.getBullet().moveBullet();
+		con.getCollision().checkCollision();
+		con.getGravity().fall();
+		con.getMove().movePlayer();
+		con.getOpponents().updateOpponents();
+		con.getBullet().moveBullet();
 		
 	}
 	

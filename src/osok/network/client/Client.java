@@ -1,7 +1,7 @@
 package osok.network.client;
 
 
-import application.Bank;
+import application.Controller;
 import application.Bullet;
 import application.Player;
 import com.google.gson.Gson;
@@ -24,13 +24,13 @@ public class Client{
     private Player player;
 
     /** Constructor **/
-    public Client(Bank bank){
+    public Client(Controller con){
         // gets player reference that's is instantiated in controller
-        this.player = bank.getPlayer();
+        this.player = con.getPlayer();
 
         try {
             // creates a new socket for game client
-           Socket socket = new Socket( bank.getPlayer().getIp() ,bank.getPlayer().getPort());
+           Socket socket = new Socket( con.getPlayer().getIp() ,con.getPlayer().getPort());
            System.out.println(" -- Client connected -- ");
 
             if(socket.isClosed()){
@@ -47,12 +47,12 @@ public class Client{
 
 
         /* start write thread for client */
-        write = new ClientWrite(socket , bank );
+        write = new ClientWrite(socket , con );
         writingThread = new Thread(write , " client-write-thread ");
         writingThread.start();
 
         /* start read thread for client */
-        read = new ClientRead(socket,bank);
+        read = new ClientRead(socket,con);
         readingThread = new Thread(read , "  client-read-thread ");
         readingThread.start();
     }
@@ -84,7 +84,7 @@ public class Client{
 
             private BufferedReader br;
             private Socket socket;
-            private Bank bank;
+            private Controller con;
             private volatile boolean running = true;
             private  ArrayList<String> oldPlayers;
             private ArrayList<Player> newPlayers = new ArrayList<>();
@@ -92,9 +92,9 @@ public class Client{
             private ArrayList<Bullet> newBullets = new ArrayList<>();
 
         /** Constructor **/
-        public ClientRead(Socket socket, Bank bank){
+        public ClientRead(Socket socket, Controller con){
                 this.socket = socket;
-                this.bank=bank;
+                this.con=con;
                 }
 
         @Override
@@ -123,8 +123,8 @@ public class Client{
                                      newBullets.add(gson.fromJson(oldBullets.get(i), Bullet.class));
                                  }
                                  // sends new arrays to opponent class
-                                    bank.getOpponents().setOpponentsList(newPlayers);
-                                    bank.getOpponents().setBulletList(newBullets);
+                                    con.getOpponents().setOpponentsList(newPlayers);
+                                    con.getOpponents().setBulletList(newBullets);
 
                              }catch (Exception e){
                                 e.printStackTrace();
@@ -152,14 +152,14 @@ public class Client{
 
                 private PrintWriter pw;
                 private Socket socket;
-                private Bank bank;
+                private Controller con;
                 private volatile boolean running = true;
                 private Gson gson;
 
             /** Constructor **/
-            public ClientWrite(Socket socket , Bank bank){
+            public ClientWrite(Socket socket , Controller con){
                 this.socket = socket;
-                this.bank=bank;
+                this.con=con;
             }
 
             @Override
@@ -170,10 +170,10 @@ public class Client{
                     while(running){
                         Thread.sleep(1);
                         // sends player to server witch adds it a array
-                        pw.println(gson.toJson(bank.getPlayer()));
+                        pw.println(gson.toJson(con.getPlayer()));
                         pw.flush();
                         // sends bullet to server witch adds it a array
-                        pw.println(gson.toJson(bank.getBullet()));
+                        pw.println(gson.toJson(con.getBullet()));
                         pw.flush();
                     }
                 }catch (Exception e){

@@ -17,10 +17,12 @@ public class Server {
 
 
     public static void main(String args[]) {
-
+    	
         try {
+        	
             // creates a server socket that listens on port 555556
             ServerSocket ssock = new ServerSocket(55556);
+            System.out.println("Server starting on port: "+ssock.getLocalPort());
             while (true) {
                 // if client array is less than 5 in size you can connect
                 if (clients.size() < 5) {
