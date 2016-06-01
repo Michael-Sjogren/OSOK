@@ -19,8 +19,8 @@ public class Opponents {
 	/** Constructor demands a reference to the "controller" **/ //which allows the class to work with other classes
 	public Opponents(Controller con) {
 		//Gets the images for the opponent enteties
-		imageLookLeft = new ImagePattern(new Image("Sprite-00012.png"));
-		imageLookRight = new ImagePattern(new Image("Sprite-00013.png"));
+		imageLookLeft = new ImagePattern(new Image("Sprite-00013.png"));
+		imageLookRight = new ImagePattern(new Image("Sprite-00012.png"));
 		
 		//Adds 4 "dead" circles which can be influenced by other clients, theese represent the players themselves
 		for (int i = 0; i < 4; i++) {
