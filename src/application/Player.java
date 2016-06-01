@@ -1,5 +1,5 @@
 package application;
-
+/** Player class is a POJO it contains all necessary information for the player**/
 public class Player{
 
 	private boolean connected;
@@ -19,6 +19,7 @@ public class Player{
     public Player() {
 	}
 
+    //Getters and Setters -------------------------------------------------------------------------------------------------------------------
 	public double getSize() {
 		return size;
 	}
