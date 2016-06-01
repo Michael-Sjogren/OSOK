@@ -1,18 +1,14 @@
 package application;
 
-/**
- * Created by david on 2016-05-27.
- */
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-/*The SpriteAnimation method retrieves values for the animation and the interpolate method does the calculation for the animation.
+/**The SpriteAnimation method retrieves values for the animation and the interpolate method does the calculation for the animation.
  * This all is done when the animation is started for another class.
- */
-
+ **/
 public class SpriteAnimation extends Transition {
 
     private final ImageView imageView;
@@ -40,7 +36,7 @@ public class SpriteAnimation extends Transition {
         setInterpolator(Interpolator.LINEAR);
     }
 
-
+    //interpolate method does the calculation for the animation.
     protected void interpolate(double k) {
         final int index = Math.min((int) Math.floor(k * count), count - 1);
         if (index != lastIndex) {
