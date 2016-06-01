@@ -24,13 +24,12 @@ import javafx.util.Duration;
 import osok.network.client.ChatClient;
 import osok.network.client.Client;
 
-/*Logins addGridPane method consists of labels, textfields, a button. The labels, and a textfield is created on a GridPane and then added to a BorderPane in the start method.
+/** Logins addGridPane method consists of labels, textfields, a button. The labels, and a textfield is created on a GridPane and then added to a BorderPane in the start method.
  *
- *The start method consists of a group that is added to a BorderPane that is added to the scene. In the start method we also have our animation of the "Sprite-glowing2.png image.
- *The animated picture is added to a Group that's added to the BorderPane.
+ * The start method consists of a group that is added to a BorderPane that is added to the scene. In the start method we also have our animation of the "Sprite-glowing2.png image.
+ * The animated picture is added to a Group that's added to the BorderPane.
  *
- */
-
+ **/
 public class Login extends Application{
 	private Bank bank;
 	private Stage stage;
