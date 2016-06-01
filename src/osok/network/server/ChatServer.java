@@ -7,11 +7,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 /**
  * Created by Michael Sjögren on 2016-05-30.
  */
+
+/** Server made for chat exclusively**/
 public class ChatServer extends Thread{
 
     private boolean running = true;
@@ -20,6 +21,7 @@ public class ChatServer extends Thread{
     private Thread sChatThreadRead , sChatThreadWrite;
     private ServerMessageHandler handler;
 
+    /** when this is called server **/
     public ChatServer(){
         start();
     }
@@ -30,7 +32,7 @@ public class ChatServer extends Thread{
             handler = new ServerMessageHandler();
             while(running){
                 Socket socket = chatServerSocket.accept();
-                System.out.println(" ---- chat client connected ----- " +  socket.getPort());
+
                 sChatRead = new ServerChatRead(socket , handler);
                 sChatWrite = new ServerChatWrite(socket , handler);
                 sChatThreadRead = new Thread(sChatRead);
@@ -100,6 +102,7 @@ class ServerChatRead implements Runnable {
                 newMessage = br.readLine();
 
                 try {
+                    // if newmessage is the same as old message it wont be sent
                     if(!newMessage.equals(oldMessage)){
                         handler.setMessage(newMessage);
                         oldMessage = newMessage;
@@ -119,6 +122,7 @@ class ServerChatRead implements Runnable {
 }
 
 
+/** handles all messages  getter and setter */
 class ServerMessageHandler {
 
     private String message = "";
