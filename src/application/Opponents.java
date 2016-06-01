@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-
+/** Opponents class holds all the nodes/shapes which gets drawn and moved depending on the players you are facing **/
 public class Opponents {
 
 	Bank bank;
@@ -16,14 +16,17 @@ public class Opponents {
 	private ArrayList<Circle> opponentsBulletList = new ArrayList<Circle>();
 	ImagePattern imageLookLeft;
 	ImagePattern imageLookRight;
-
+	/** Constructor demands a reference to the "controller" **/ //which allows the class to work with other classes
 	public Opponents(Bank bank) {
+		//Gets the images for the opponent enteties
 		imageLookLeft = new ImagePattern(new Image("Sprite-00010.png"));
 		imageLookRight = new ImagePattern(new Image("Sprite-0009.png"));
 		
+		//Adds 4 "dead" circles which can be influenced by other clients, theese represent the players themselves
 		for (int i = 0; i < 4; i++) {
 			opponentsCircleList.add(new Circle(-30,-30,20));
 		}
+		//Adds 4 circles which can be influenced by other clients, theese represent the player's bullets
 		for (int i = 0; i < 4; i++) {
 			Circle temp = new Circle(-60,-60,5,Color.GOLDENROD);
 			temp.setStroke(Color.BLACK);
@@ -33,16 +36,19 @@ public class Opponents {
 		}
 		this.bank = bank;
 	}
-
+/** Updates the opponents bullet and circle location **/
 	public void updateOpponents() {
 		try{
 			if(!(bank.getOpponents().getOpponentsList().size()==0)){
+				//Loops through all the opponents sent to the client from the server
 		for (int i = 0; i < bank.getOpponents().getOpponentsList().size(); i++) {
+			//Changes the images depending on the way the opponent is facing
 			if(bank.getOpponents().getOpponentsList().get(i).isLeft()){
 				bank.getOpponents().getOpponentsCircleList().get(i).setFill(imageLookLeft);
 			}else{
 				bank.getOpponents().getOpponentsCircleList().get(i).setFill(imageLookRight);
 			}
+			//Update the dead circles to match the cordinates of the other clients
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(bank.getOpponents().getOpponentsList().get(i).getxPos());
 			bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(bank.getOpponents().getOpponentsList().get(i).getyPos());
 			bank.getOpponents().getOpponentsBulletList().get(i).setCenterX(bank.getOpponents().getBulletsList().get(i).getCurrentCordsX());
@@ -50,16 +56,18 @@ public class Opponents {
 			
 				}
 			}
+			//Moves all the circles which no one is controlling of the screen
 			for(int i = bank.getOpponents().getOpponentsList().size();i<4;i++){
 				bank.getOpponents().getOpponentsCircleList().get(i).setCenterX(-30);
 				bank.getOpponents().getOpponentsCircleList().get(i).setCenterY(-30);
 						}
 		}catch(Exception e){
-			System.out.println(e.getMessage());
+			
 		}
 	}
 	
 	
+	/** Setter and getters **/
 
 	public ArrayList<Player> getOpponentsList() {
 		return opponentsList;
@@ -92,5 +100,7 @@ public class Opponents {
 	public void setBulletList(ArrayList<Bullet> bulletList) {
 		this.bulletsList = bulletList;
 	}
+	
+	/** ----------------------------------------------------------- **/
 
 }
