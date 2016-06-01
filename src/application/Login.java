@@ -146,7 +146,7 @@ public class Login extends Application{
               System.out.println("IP :: " +player.getIp());
 			  System.out.println("PORT :: " +player.getPort());
 			  chatClient = new ChatClient(bank.getPlayer().getIp() , bank);
-			  client = new Client(bank , chatClient);
+			  client = new Client(bank);
 
 
                 if(player.isConnected()){
