@@ -1,10 +1,10 @@
 package application;
-
+/** Scoreboard class updates the scoeboard 2.5 times a second  **/
 public class Scoreboard implements Runnable {
 
 	private Bank bank;
 	private boolean running = true;
-
+	/** Constructor demands a reference to the "controller" **/ //which allows the class to work with other classes
 	public Scoreboard(Bank bank) {
 		this.bank = bank;
 	}
@@ -30,10 +30,11 @@ public class Scoreboard implements Runnable {
 				Thread.sleep(400);
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	//Setters and Getters
 	
 	public void stopThread(){
 		running = false;
