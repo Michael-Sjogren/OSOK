@@ -24,6 +24,13 @@ import javafx.util.Duration;
 import osok.network.client.ChatClient;
 import osok.network.client.Client;
 
+/*Logins addGridPane method consists of labels, textfields, a button. The labels, and a textfield is created on a GridPane and then added to a BorderPane in the start method.
+ *
+ *The start method consists of a group that is added to a BorderPane that is added to the scene. In the start method we also have our animation of the "Sprite-glowing2.png image.
+ *The animated picture is added to a Group that's added to the BorderPane.
+ *
+ */
+
 public class Login extends Application{
 	private Bank bank;
 	private Stage stage;
@@ -31,12 +38,18 @@ public class Login extends Application{
 
 	Image IMAGE = new Image("Sprite-glowing2.png");
 
+	/*Values to be sent to the SpriteAnimation class. Columns and count says in how many pieces an image is supposed to the split up into and to be used.
+	 *Offset value is to change the start point of the animation. The Width and Height is the size of the area you want the sprite to cover, in this case the animation is used
+	 * on the entire scene.
+	 */
 	private int COLUMNS  =   29;
 	private int COUNT    =  29;
 	private int OFFSET_X =  0;
 	private int OFFSET_Y =  0;
 	private int WIDTH    = 1024;
 	private int HEIGHT   = 720;
+
+
 	private ChatClient chatClient;
 
 
@@ -49,6 +62,7 @@ public class Login extends Application{
 		ImageView imageView = new ImageView(IMAGE);
 		imageView.setViewport(new Rectangle2D(OFFSET_X, OFFSET_Y, WIDTH, HEIGHT));
 
+		//The code that's used to send the values that was mentioned earlier as well as the speed you want the animation to go in. The lower the number is the faster the animation is.
 		Animation animation = new SpriteAnimation(
 				imageView,
 				Duration.millis(2000),
@@ -56,10 +70,11 @@ public class Login extends Application{
 				OFFSET_X, OFFSET_Y,
 				WIDTH, HEIGHT
 		);
+		//Sets how many times the animation is supposed to circle around and starts the animation.
 		animation.setCycleCount(Animation.INDEFINITE);
 		animation.play();
-		Group group = new Group(imageView);
 
+		Group group = new Group(imageView);
 		pane.getChildren().add(group);
 		pane.setCenter(addGridPane());
 		Scene scene = new Scene(pane, 1014, 710);
