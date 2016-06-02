@@ -12,7 +12,7 @@ import java.net.Socket;
  * Created by Michael Sjögren on 2016-05-30.
  */
 
-/** Server made for chat exclusively**/
+/** Server made for chat exclusively **/
 public class ChatServer extends Thread{
 
     private boolean running = true;
@@ -21,7 +21,7 @@ public class ChatServer extends Thread{
     private Thread sChatThreadRead , sChatThreadWrite;
     private ServerMessageHandler handler;
 
-    /** when this is called server **/
+    /** this constructor is called in server witch starts this thread **/
     public ChatServer(){
         start();
     }
