@@ -69,7 +69,7 @@ public class Server {
         @Override
         public void run() {
             try  {
-                // creates a new inputsream
+                // creates a new inputstream
                 br = new BufferedReader(new InputStreamReader(csocket.getInputStream()));
                 // gson object for deSerialization and serialization of pojo class , Bullet and Player
                 gson = new Gson();
@@ -91,7 +91,6 @@ public class Server {
                         }
                     }
                 }
-
             } catch (IOException e) {
 
             } catch (Exception e) {
@@ -107,11 +106,6 @@ public class Server {
             }
         }
     }
-
-
-    /**
-     * Writes to Clients
-     **/
 
     /** writes to client **/
     static class ServerWrite implements Runnable {
@@ -165,7 +159,7 @@ public class Server {
             return gson.toJson(tempArray);
         }
     }
-/**  if close window this method i called , witch removes element that is current socket **/
+/**  if close window this method is called , which removes the element that is equal to current socket **/
     public static void closeSocket(Socket socket) {
 
         players.remove(clients.indexOf(socket));
