@@ -11,7 +11,7 @@ public class Bullet {
 	private boolean flying = false;
 	private boolean hit = false;
 	private int distanceTravelled = 0;
-	private int timeFlewn = 0;
+	private int timeSinceShot = 0;
 
 	/** Constructor demands a reference to the "controller" **/ //which allows the class to work with other classes
 	public Bullet(Controller con) {
@@ -22,7 +22,8 @@ public class Bullet {
 
 	/** Shoots the bullet from the players position if the bullet isnt already in-air **/
 	public void shootBullet() {
-		if (!flying) {
+		if (!flying&&timeSinceShot>79) {
+			timeSinceShot = 0;
 			System.out.println("Shoot Bullet");
 			flying = true;
 			distanceTravelled = 0;
@@ -40,6 +41,7 @@ public class Bullet {
 
 	/** Moves the bullet a set amount of pixels **/
 	public void moveBullet() {
+		timeSinceShot +=1;
 		if (flying) {
 			//adds the pixels flewn to the distanceTravelled variable
 			distanceTravelled += velX;
@@ -158,12 +160,12 @@ public class Bullet {
 		this.distanceTravelled = distanceTravelled;
 	}
 
-	public int getTimeFlewn() {
-		return timeFlewn;
+	public int getTimeSinceShot() {
+		return timeSinceShot;
 	}
 
-	public void setTimeFlewn(int timeFlewn) {
-		this.timeFlewn = timeFlewn;
+	public void setTimeSinceShot(int timeSinceShot) {
+		this.timeSinceShot = timeSinceShot;
 	}
 
 	/** ----------------------------------------------------------- **/
