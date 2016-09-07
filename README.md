@@ -5,4 +5,5 @@ När du har en server körandes kan du antagligen starta Login.java som är main
 Sedan connectar du bara till den korrekta ip'n och så kan du börja spela!
 
 Buggar finns på Google Drive!
+
 https://docs.google.com/document/d/1Cij_AtN1wpXL4RDea-Fdrg3Tg-sJYwNNYK73iWrXAbs/edit?usp=sharing
